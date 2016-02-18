@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+字符串.replace(被替换的字符串，替换字符串);
+*/
+
+//var str = 'abc'
+
+//alert( str.replace('b', '*') );
+
+var str = '习近平说：“台湾是中国领土不可分隔的一部分”';
+
+//alert( str.replace('习近平', '*') );
+
+//alert( str.replace(/习近平|台湾/g, '*') );
+
+/*
+replace，第二个参数是替换字符，但是他也可以接收函数，当我们传入的一个函数的时候，那么只要内容被匹配一次就会执行函数一次，这个函数在执行可以接收内部传入的一些数据给我们使用，我们可以通过这个函数的参数来获取，函数的返回值作为替换字符串，替换掉当前这一次匹配出来的内容
+第一个参数是正则表达式当前这一次匹配出来的内容
+*/
+
+var str2 = str.replace(/习近平|台湾/g, function(v) {
+	//alert(v);
+	//return 1;
+	
+	var s = '';
+	for (var i=0; i<v.length; i++) {
+		s += '*';
+	}
+	return s;
+	
+});
+
+alert(str2);
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

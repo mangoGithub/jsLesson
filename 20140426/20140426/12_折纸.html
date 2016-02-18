@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes open
+{
+	0%
+	{
+		-webkit-transform:rotateX(-120deg);
+	}
+	50%
+	{
+		-webkit-transform:rotateX(50deg);
+	}
+	60%
+	{
+		-webkit-transform:rotateX(-40deg);
+	}
+	70%
+	{
+		-webkit-transform:rotateX(30deg);
+	}	
+	80%
+	{
+		-webkit-transform:rotateX(-20deg);
+	}
+	90%
+	{
+		-webkit-transform:rotateX(10deg);
+	}
+	100%
+	{
+		-webkit-transform:rotateX(0deg);
+	}
+}
+#list1{ width:200px;margin:0 auto; position:relative; -webkit-perspective:800px;}
+#list1 h2{ height:40px;background:#F33; text-align:center;margin:0; font:bold 16px/40px "宋体"; color:#fff; position:relative;z-index:10;}
+#list1 div{-webkit-transform-style:preserve-3d; position:absolute;left:0;top:32px;width:100%; -webkit-transform-origin:top; -webkit-transform:rotateX(-120deg);}
+#list1 span{ display:block;height:30px; background:#9F0; color:#fff; text-indent:20px; font-size:14px; line-height:30px;}
+#list1>div{top:40px;}
+#list1 .open{-webkit-animation:1.2s open linear;-webkit-transform:rotateX(0deg);}
+#btn{ position:absolute;}
+</style>
+</head>
+<body>
+<input type="button" value="展开" id="btn" />
+<div id="list1">
+	<h2>我是标题</h2>
+    <div>
+    	<span>2</span>
+        <div>
+        	<span>3</span>
+            <div>
+            	<span>4</span>
+                <div>
+            		<span>5</span>
+                    <div>
+            			<span>6</span>
+                        <div>
+            				<span>7</span>
+                        </div>
+                    </div>    
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+window.onload=function()
+{
+	var oList=document.getElementById("list1");
+	var aDiv=oList.getElementsByTagName("div");
+	var oBtn=document.getElementById("btn");
+	oBtn.onclick=function()
+	{
+		for(var i=0;i<aDiv.length;i++)
+		{
+			aDiv[i].className="open";
+		}
+	};
+};
+</script>
+</body>
+</html>

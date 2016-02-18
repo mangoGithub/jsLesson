@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+html { border: 10px solid #333;}
+body { margin: 0; }
+div { padding: 50px; float: left; border: 10px solid #333; }
+#div1 { background: green; position: relative; margin: 50px 60px; }
+#div2 { background: pink; position: relative; }
+#div3 { background: red; position: relative; left: 0; top: 0; }
+</style>
+</head>
+
+<body>
+
+  <div id="div1">
+  	<div id="div2">
+    	<div id="div3"></div>
+    </div>
+  </div>
+
+
+</body>
+</html>
+
+<script>
+
+
+var oDiv1 = document.getElementById('div1');
+var oDiv2 = document.getElementById('div2');
+var oDiv3 = document.getElementById('div3');
+
+//alert( getStyle(oDiv2, 'borderLeftWidth') );
+
+alert( posLeft( oDiv3 ) );
+
+function posLeft(obj){
+
+	var iLeft = 0;
+	
+	while(obj){
+	
+		iLeft += obj.offsetLeft;	
+		
+		obj = obj.offsetParent;
+		
+		if(obj && obj!=document.body && obj!=document.documentElement){
+			iLeft += getStyle(obj, 'borderLeftWidth');
+		}
+	}
+	
+	return iLeft;
+	
+}
+
+function posTop(obj){
+
+	var iTop = 0;
+	
+	while(obj){
+	
+		iTop += obj.offsetTop;	
+		
+		obj = obj.offsetParent;
+
+		if(obj && obj!=document.body && obj!=document.documentElement){
+			iLeft += getStyle(obj, 'borderTopWidth');
+		}
+
+	}
+	
+	return iTop;
+	
+}
+
+
+function getStyle(obj,attr){
+	
+	if(obj.currentStyle){
+		return parseFloat( obj.currentStyle[attr]) || 0;	
+	}
+	
+	return parseFloat( getComputedStyle(obj)[attr]) || 0;
+	
+}
+
+
+/*
+
+练习： 当节点有边框的时候， posLeft() 和 posTop() 取值时会把边框漏掉，需要大家修复这个bug.
+
+*/
+
+
+</script>

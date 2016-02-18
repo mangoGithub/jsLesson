@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+var str = 'jk32kjh342hj 3424hj324hj234kl6';
+
+var arr = [];
+var t = '';
+/* [32,342,2424,324,234,6] */
+
+for (var i=0; i<str.length; i++) {
+	var v = parseInt( str.charAt(i) );
+	
+	if ( !isNaN( v ) ) {
+		t += v;
+	} else {
+		if (t != '') {
+			arr.push(t);
+			t = '';
+		}
+	}
+	
+}
+if (t != '') {
+	arr.push(t);
+}
+
+alert(arr);
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

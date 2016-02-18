@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<ul>
+	<li>
+  	ffsakfjalf1111
+  	<input type="button" value="上移1111" />
+  	<input type="button" value="下移1111" />
+  </li>
+	<li>
+  	ffsakfjalf2222
+  	<input type="button" value="上移2222" />
+  	<input type="button" value="下移2222" />
+  </li>
+	<li>
+  	ffsakfjalf3333
+  	<input type="button" value="上移3333" />
+  	<input type="button" value="下移3333" />
+  </li>
+	<li>
+  	ffsakfjalf4444
+  	<input type="button" value="上移4444" />
+  	<input type="button" value="下移4444" />
+  </li>
+	<li>
+  	ffsakfjalf5555
+  	<input type="button" value="上移5555" />
+  	<input type="button" value="下移5555" />
+  </li>
+</ul>
+
+<input type="button" id="btn" value="随机" />
+
+</body>
+</html>
+
+<script>
+
+var oUl = document.getElementsByTagName('ul')[0];
+var aLi = document.getElementsByTagName('li');
+var aBtn = oUl.getElementsByTagName('input');
+var oBtn = document.getElementById('btn');
+var arr = [];
+
+for(var i=0; i<aLi.length; i++){
+	arr.push( aLi[i] );	
+}
+
+oBtn.onclick = function(){
+
+	arr.sort( function(){return Math.random()-0.5;} );	
+	
+	for(var i=0; i<aLi.length; i++){
+	
+		oUl.appendChild( arr[i] );
+		
+	}
+	
+};
+
+
+for(var i=0; i<aBtn.length; i++){
+
+	aBtn[i].index = i;
+	
+	aBtn[i].onclick = function(){
+		
+		var o = this.parentNode;
+	
+		if(this.index % 2 == 0){
+			
+			if(getPrev(o)){
+				oUl.insertBefore(o,getPrev(o));	
+			}else{
+				alert('已经是第一个啦！~');	
+			}
+			
+		}else{
+		
+			if(getNext(o)){
+				oUl.insertBefore(getNext(o),o);	
+			}else{
+				alert('已经是最后一个啦！~');	
+			}
+				
+			
+		}
+		
+	};
+	
+}
+
+	
+function getPrev(obj){
+	
+	if(!obj.previousSibling)return null;
+	
+	return obj.previousSibling.nodeType === 1 ? obj.previousSibling : getPrev(obj.previousSibling);
+	
+}
+
+function getNext(obj){
+	
+	if(!obj.nextSibling)return null;
+	
+	return obj.nextSibling.nodeType === 1 ? obj.nextSibling : getNext(obj.nextSibling);
+	
+}
+
+
+</script>

@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+dl, dd, p,ul,li { margin:0; padding:0; list-style:none; }
+body { background:#f1f1f1; }
+#str { width:460px; border:10px solid #e1e1e1; padding:20px; background:#fff; font-family:微软雅黑; font-size:16px; margin:50px auto 0; position:relative; }
+#str dl { width:80px; height:40px; position:absolute; top:-10px; right:-92px; text-align:center; line-height:40px; background:#ccc; overflow:hidden; cursor:pointer; }
+#str dl.active { height: auto; }
+#str dt { height:39px; background:#9e9e9e; color:#fff; }
+#str dt:hover { background:#8a8989;}
+#str dd { border-top:1px solid #fff; }
+#str dd:hover { background:#F60; color:#fff; }
+#str p { line-height:30px; }
+
+#fun { width:460px; position:absolute; top:50%; left:50%; border:10px solid #F06; background:#FFC; padding:20px; margin-left: -260px; display:none; }
+#fun a { position:absolute; top:0px; right:12px; text-decoration:none; color:#000; font-size:24px; font-family:微软雅黑; }
+#fun ul { height:32px; border-bottom:2px solid #F30; }
+#fun li { float:left; width:78px; height:30px; text-align:center; line-height:30px; cursor:pointer; margin-right:2px; font-size:14px; }
+#fun .active { background:#F30; height:32px; color:#fff; font-weight:bold; font-size:16px; }
+#fun .box { padding-top:20px; display:none; }
+
+input { font-size:16px; font-family:微软雅黑; padding:2px; }
+span { background:yellow; }
+</style>
+</head>
+
+<body>
+
+<div id="str">
+	<dl>
+  	<dt>展开</dt>
+    <dd>查找</dd>
+    <dd>替换</dd>
+  </dl>
+  <p>妙味课堂是一支充满温馨并且极富人情味的IT培训团队；2010～2011年，妙味深度关注WEB前端开发领域，为此精心研发出一套灵活而充满趣味的 JavaScript 课程。2011～2013年，妙味精准研发出最新HTML5\CSS3课程，并推出远程培训课程方案，尝试将线下优良的培训模式移植到远程网络培训中，希望尽最大努力，将一种快乐愉悦的授课体验、结合 HTML \ CSS \ JS 知识点，精准传递给妙味课堂的每一位学员。</p>
+</div>
+
+<div id="fun">
+	<a href="javascript:;" title="关闭">x</a>
+	<ul>
+  	<li class="active">查找</li>
+    <li>替换</li>
+  </ul>
+  <div class="box" style="display: block;">
+  	<input type="text" />
+    <input type="button" value="查找" />
+  </div>
+  <div class="box">
+  	<input type="text" />
+  	<input type="text" />
+    <input type="button" value="替换" />
+  </div>
+</div>
+
+<script>
+
+var oStr = document.getElementById('str');
+var oDl = oStr.getElementsByTagName('dl')[0];
+var oDt = oDl.getElementsByTagName('dt')[0];
+var aDd = oDl.getElementsByTagName('dd');
+var oP = oStr.getElementsByTagName('p')[0];
+
+var oFun = document.getElementById('fun');
+var oClose = oFun.getElementsByTagName('a')[0];
+var aLi = oFun.getElementsByTagName('li');
+var aDiv = oFun.getElementsByTagName('div');
+
+//alert( oP.innerHTML );
+
+oDt.onclick = function(){
+
+	oDl.className = oDl.className ? '' : 'active';
+	this.innerHTML = this.innerHTML == '展开' ? '收缩' : '展开';	
+	
+};
+
+oClose.onclick = function(){
+	oFun.style.display = 'none';	
+};
+
+for(var i=0; i<aLi.length; i++){
+
+	aLi[i].index = i;
+	aLi[i].onclick = function(){
+		fnTab(this.index);
+	};	
+	
+}
+
+for(var i=0; i<aDd.length; i++){
+
+	aDd[i].index = i;
+	aDd[i].onclick = function(){
+		
+		oFun.style.display = 'block';
+		fnTab(this.index);
+
+	};
+	
+}
+
+function fnTab(num){
+	
+	for(var i=0; i<aLi.length; i++){
+		aLi[i].className = '';
+		aDiv[i].style.display = 'none';	
+	}	
+	aLi[num].className = 'active';
+	aDiv[num].style.display = 'block';
+	
+}
+
+
+fnFind(aDiv[0]); //查找
+
+function fnFind(obj){
+	var aInput = obj.getElementsByTagName('input');
+	
+	aInput[1].onclick = function(){
+		
+		var s = aInput[0].value;
+		var str = oP.innerHTML;
+		
+		if(!s)return;
+
+		if(str.indexOf(s)==-1){
+			alert('找不到关键字【'+s+'】!');
+			return;
+		}
+
+		removeTag();
+		oP.innerHTML = str.split(s).join('<span>'+s+'</span>');
+		
+	};
+	
+}
+
+
+fnReplace(aDiv[1]); //替换
+
+function fnReplace(obj){
+	
+	var aInput = obj.getElementsByTagName('input');
+	
+	aInput[2].onclick = function(){
+		
+		var s1 = aInput[0].value;
+		var s2 = aInput[1].value;
+		var str = oP.innerHTML;
+		
+		if(!s1)return;
+		
+		if(str.indexOf(s1)==-1){
+			alert('找不到关键字'+s1+'!');
+			return;
+		}
+
+		
+		if(!s2){
+
+			if( confirm('确定删除【'+s1+'】吗？') ){
+			
+				removeTag();
+				oP.innerHTML = str.split(s1).join('');
+				
+			}
+			
+		}else{
+			
+			if( confirm('确定把【'+s1+'】替换成【'+s2+'】吗？') ){
+			
+				removeTag();
+				oP.innerHTML = str.split(s1).join('<span>'+s2+'</span>');
+				
+			}
+			
+		}
+		
+	};
+
+}
+
+//removeTag()
+
+function removeTag(){
+	
+	var str = oP.innerHTML;
+	
+	if(str.indexOf('<')==-1)return;
+	
+	var start = str.substring(str.indexOf('<'),str.indexOf('<')+6); // '<span> || <SPAN>'
+	
+	var end = str.substring(str.indexOf('</'),str.indexOf('</')+7); // '</span> || </SPAN>'
+	
+	//alert(end);
+	
+	oP.innerHTML = str.split(start).join('').split(end).join('');
+	
+}
+
+//alert( confirm('dafd') );
+
+/*
+
+confirm() ： 系统弹窗。
+
+	如果点击了确定，返回值为true，否则返回值为false.
+
+
+*/
+
+</script>
+
+</body>
+</html>

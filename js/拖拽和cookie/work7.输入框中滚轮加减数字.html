@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+window.onload = function() {
+	
+	var oText = document.getElementById('text1');
+	
+	oText.onmousewheel = fn;
+	if (oText.addEventListener) {
+		oText.addEventListener('DOMMouseScroll', fn, false);
+	}
+	
+	function fn(ev) {
+		var ev = ev || event;
+		
+		var iBtn = true;
+		
+		if (ev.wheelDelta) {
+			iBtn = ev.wheelDelta > 0 ? true : false;
+		} else {
+			iBtn = ev.detail < 0 ? true : false;
+		}
+		
+		if (iBtn) {
+			this.value = parseInt( this.value ) + 1;
+		} else {
+			this.value = parseInt( this.value ) - 1;
+		}
+		
+		if (ev.preventDefault) {
+			ev.preventDefault();
+		}
+		
+		return false;
+		
+	}
+	
+}
+</script>
+</head>
+
+<body style="height: 2000px;">
+	<input type="text" id="text1" value="1" />
+</body>
+</html>

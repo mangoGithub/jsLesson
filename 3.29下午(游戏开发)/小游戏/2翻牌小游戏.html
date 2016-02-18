@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{ margin:0; padding:0;}
+#ul1{ width:348px; height:2000px; margin:20px auto; position:relative; overflow:hidden;}
+#ul1 li{ width:87px; height:87px; float:left; list-style:none;}
+.img1{ background:url(img/a.png) no-repeat;}
+.img2{ background:url(img/b.png) no-repeat;}
+.img3{ background:url(img/c.png) no-repeat;}
+.img4{ background:url(img/d.png) no-repeat;}
+.img5{ background:url(img/e.png) no-repeat;}
+.img6{ background:url(img/f.png) no-repeat;}
+.imgDef{ background:url(img/w.png) no-repeat;}
+
+</style>
+<script src="move.js"></script>
+<script>
+
+window.onload = function(){
+	
+	var oInput = document.getElementById('input1');
+	
+	oInput.onclick = function(){
+		
+		Game.init();  //游戏开始啦！！！
+		
+	};
+	
+};
+
+var Game = {
+	
+	iNow : 1,
+	
+	gk : [  //关卡的数据
+		{
+			timeAll : 20
+		},
+		{
+			timeAll : 15
+		},
+		{
+			timeAll : 3
+		}
+	],
+	
+	init : function(){  //初始化
+	
+		this.oUl = document.getElementById('ul1');
+		this.aLi = this.oUl.getElementsByTagName('li');
+		this.oTime = document.getElementById('time');
+	
+		this.createImg(this.iNow);
+	
+	},
+	createImg : function(num){   //创建图片
+		
+		document.title = '第'+ num +'关';
+		
+		/*第一关 : 成对的2组  4个图  num : 1
+		第二关 : 成对的3组  6个图   num : 2
+		第三关 : 成对的4组  8个图   num : 3
+		第四关 : 成对的5组  10个图  num : 4*/
+		
+		var zu = num + 1;
+		
+		var arr = [];
+		
+		for(var i=1;i<=zu;i++){
+			arr.push( i );
+		}
+		
+		arr = arr.concat(arr);
+		
+		//alert(arr);
+		
+		arr.sort(function(num1,num2){
+			return Math.random() - 0.5;
+		});
+		
+		
+		for(var i=0;i<arr.length;i++){
+			var oLi = document.createElement('li');
+			oLi.oldClass = 'img'+arr[i];
+			oLi.className = 'img'+arr[i];
+			this.oUl.appendChild(oLi);
+		}
+		
+		this.changePos();
+		
+		this.defaultImg();
+		
+	},
+	
+	changePos : function(){  //布局转换
+		
+		var arr = [];
+		for(var i=0;i<this.aLi.length;i++){
+			arr.push([this.aLi[i].offsetLeft,this.aLi[i].offsetTop]);
+		}
+		
+		for(var i=0;i<this.aLi.length;i++){
+			this.aLi[i].style.position = 'absolute';
+			this.aLi[i].style.left = arr[i][0]+'px';
+			this.aLi[i].style.top = arr[i][1]+'px';
+		}
+		
+	},
+	
+	defaultImg : function(){   //图片翻转到默认状态
+	
+		var This = this;
+	
+		setTimeout(function(){
+			
+			for(var i=0;i<This.aLi.length;i++){
+				This.aLi[i].className = 'imgDef';
+			}
+			
+			This.bindImg();
+			
+			This.runTime();
+			
+		},2000);
+	
+	},
+	bindImg : function(){   //点击图片
+	
+		var arr = [];
+		var This = this;
+		//var iNum = 0;
+	
+		for(var i=0;i<this.aLi.length;i++){
+			this.aLi[i].onclick = function(){
+				
+				this.className = this.oldClass;
+				
+				arr.push(this);
+				
+				if( arr.length == 2 ){
+					This.conArr( arr );
+					arr = [];
+				}
+				
+			};
+		}
+	
+	},
+	conArr : function( arr ){   //比较一不一样的图片
+		
+		var This = this;
+		
+		if( arr[0].oldClass == arr[1].oldClass ){  //删除
+			
+			
+			startMove( arr[0] , { top : -87 } , function(){
+	
+	this.parentNode.removeChild( this );
+				
+				
+} );
+	startMove( arr[1] , { top : -87 } , function(){
+	
+	this.parentNode.removeChild( this );	
+	This.nextGK();			
+				
+} );
+			
+		}
+		else{   //反过去
+			
+			setTimeout(function(){
+			
+				arr[0].className = 'imgDef';
+				arr[1].className = 'imgDef';
+			
+			},1000);
+		}
+		
+		
+		
+	},
+	nextGK : function(){  //下一关
+		
+		if( this.aLi.length == 0 ){
+			clearInterval(this.oTime.timer);
+			this.oTime.innerHTML = 0;
+			this.iNow++;
+			this.createImg(this.iNow);
+		}
+	
+	},
+	
+	runTime : function(){   //倒计时
+		var This = this;
+		this.oTime.innerHTML = this.gk[this.iNow-1].timeAll;
+		
+		this.oTime.timer = setInterval(function(){
+			
+			This.oTime.innerHTML = parseInt(This.oTime.innerHTML) - 1;
+			
+			if(This.oTime.innerHTML == 0){
+				clearInterval(This.oTime.timer);
+				alert('游戏结束！！！');
+			}
+			
+		},1000);
+		
+	
+	}
+	
+};
+
+</script>
+</head>
+
+<body>
+<input type="button" value="开始" id="input1">
+时间 : <span id="time">0</span> 总分 : <span id="score">0</span>
+<ul id="ul1">
+	<!--<li class="img2"></li>
+    <li class="img2"></li>
+    <li class="imgDef"></li>
+    <li class="img4"></li>
+    <li class="imgDef"></li>
+    <li class="img5"></li>-->
+</ul>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+//原型，当一个函数被创建的创建的时候，这个函数下面有一个属性 prototype
+function Person(name) {
+	//var obj = new Object();
+	this.name = name;
+	this.say = function() {
+		alert('我是' + this.name);
+	}
+	//return obj;
+}
+
+//alert( Person.prototype )
+
+var p1 = new Person('leo');
+//p1.say();
+
+/*
+当一个对象被创建的时候，对象下的__proto__指向了他的构造函数的prototype
+prototype 称为 原型
+当我们去调用对象的一个属性或者方法的时候，首先对象会去看自己有没有这个属性或者方法，如果有则调用，如果对象自己身上没有，则会依据对象__proto__去查找，其实也就是查找他的构造函数的prototype
+*/
+//alert( p1.__proto__ == Person.prototype );
+
+var p2 = new Person('momo');
+//p2.say();
+
+//alert(p1.say == p2.say);
+</script>
+</head>
+
+<body>
+</body>
+</html>

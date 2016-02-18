@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height: 100px; background: red; position: absolute; left: 400px; top: 200px;}
+</style>
+<script>
+window.onload = function() {
+	
+	var oDiv = document.getElementById('div1');
+	var iBtn = '';
+	var iOpen = true;
+	var disX = 0;
+	var disY = 0;
+	var disL = 0;
+	var disT = 0;
+	var disW = 0;
+	var disH = 0;
+	
+	oDiv.onmousemove = function(ev) {
+		
+		if (!iOpen) {
+			return ;
+		}
+		
+		var ev = ev || event;
+		
+		disX = ev.clientX;
+		disY = ev.clientY;
+		disL = this.offsetLeft;
+		disT = this.offsetTop;
+		disW = this.offsetWidth;
+		disH = this.offsetHeight;
+		
+		this.style.cursor = '';
+		iBtn = '';
+		
+		//left
+		if ( disX < disL + 10 ) {
+			this.style.cursor = 'w-resize';
+			iBtn = 'left';
+		}
+		//top
+		if ( disY < disT + 10 ) {
+			this.style.cursor = 'n-resize';
+			iBtn = 'top';
+		}
+		//right
+		if ( disX > disL + disW - 10 ) {
+			this.style.cursor = 'w-resize';
+			iBtn = 'right';
+		}
+		//bottom
+		if ( disY > disT + disH - 10 ) {
+			this.style.cursor = 'n-resize';
+			iBtn = 'bottom';
+		}
+		//lefttop
+		if ( disX < disL + 10 && disY < disT + 10 ) {
+			this.style.cursor = 'nw-resize';
+			iBtn = 'lefttop';
+		}
+		//righttop
+		if ( disX > disL + disW - 10 && disY < disT + 10 ) {
+			this.style.cursor = 'ne-resize';
+			iBtn = 'righttop';
+		}
+		//rightbottom
+		if ( disX > disL + disW - 10 && disY > disT + disH - 10 ) {
+			this.style.cursor = 'nw-resize';
+			iBtn = 'rightbottom';
+		}
+		//leftbottom
+		if ( disX < disL + 10 && disY > disT + disH - 10 ) {
+			this.style.cursor = 'ne-resize';
+			iBtn = 'leftbottom';
+		}
+	}
+	
+	oDiv.onmousedown = function() {
+		
+		iOpen = false;
+		
+		//alert(iBtn);
+		
+		document.onmousemove = function(ev) {
+			var ev = ev || event;
+			
+			//document.title = iBtn;
+			
+			switch(iBtn) {
+				
+				case 'left':
+					oDiv.style.width = disW - ( ev.clientX - disX ) + 'px';
+					oDiv.style.left = disL + ( ev.clientX - disX ) + 'px';
+					break;
+					
+				case 'top':
+					oDiv.style.height = disH - ( ev.clientY - disY ) + 'px';
+					oDiv.style.top = disT + ( ev.clientY - disY ) + 'px';
+					break;
+					
+				case 'right':
+					/*console.log(disX);*/
+					oDiv.style.width = disW + ( ev.clientX - disX ) + 'px';
+					break;
+					
+				case 'bottom':
+					oDiv.style.height = disH + ( ev.clientY - disY ) + 'px';
+					break;
+					
+				case 'lefttop':
+					oDiv.style.width = disW - ( ev.clientX - disX ) + 'px';
+					oDiv.style.left = disL + ( ev.clientX - disX ) + 'px';
+					oDiv.style.height = disH - ( ev.clientY - disY ) + 'px';
+					oDiv.style.top = disT + ( ev.clientY - disY ) + 'px';
+					break;
+					
+				case 'righttop':
+					oDiv.style.width = disW + ( ev.clientX - disX ) + 'px';
+					oDiv.style.height = disH - ( ev.clientY - disY ) + 'px';
+					oDiv.style.top = disT + ( ev.clientY - disY ) + 'px';
+					break;
+					
+				case 'rightbottom':
+					oDiv.style.width = disW + ( ev.clientX - disX ) + 'px';
+					oDiv.style.height = disH + ( ev.clientY - disY ) + 'px';
+					break;
+					
+				case 'leftbottom':
+					oDiv.style.width = disW - ( ev.clientX - disX ) + 'px';
+					oDiv.style.left = disL + ( ev.clientX - disX ) + 'px';
+					oDiv.style.height = disH + ( ev.clientY - disY ) + 'px';
+					break;
+				
+			}
+			
+		}
+		
+		document.onmouseup = function() {
+			document.onmousemove = null;
+			iOpen = true;
+		}
+		
+		return false;
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<div id="div1"></div>
+</body>
+</html>

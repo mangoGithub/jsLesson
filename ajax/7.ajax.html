@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+AJAX : Asynchronous JavaScript and XML（异步JavaScript和XML)
+可以通过js去访问（请求）一个url数据，并且得到返回结果
+*/
+
+//1.要使用ajax去访问url，首先要创建一个ajax对象
+//在ie6及其一下XMLHttpRequest不存在
+//ie6- : ActiveXObject('Microsoft.XMLHTTP');
+//var xhr = new XMLHttpRequest();
+
+/*
+我们通过浏览器访问ulr的步骤
+	1.打开浏览器 - 创建对象
+	2.输入url - open
+	3.跳转 - send
+	4.等待数据返回 - 事件
+	5.浏览器解析数据并显示 - 数据的解析
+*/
+
+window.onload = function() {
+	
+	var oUsername = document.getElementById('username');
+	var oMsg = document.getElementById('msg');
+	
+	oUsername.onblur = function() {
+		
+		var xhr = null;
+
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		
+		/*
+		get
+			发送的数据在url？后面
+			发送中文会乱码
+				编码发送 encodeURI
+				缓存：在url后面跟上随机串
+		post
+			发送数据是放在send(数据)作为参数
+			我们需要手动设置发送数据类型
+			setRequestHeader : 设置请求头信息
+			没有编码问题
+			没有缓存
+		*/
+		xhr.open('post', 'checkUsername3.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.send('username=' + oUsername.value);
+		
+		
+		xhr.onreadystatechange = function() {
+			
+			if (xhr.readyState == 4) {
+				
+				//alert(typeof xhr.responseText);
+				var data = JSON.parse(xhr.responseText);
+				
+				console.log(data);
+				
+				/*if (data.code == 1 || data.code == 2) {
+					oMsg.style.color = 'red';
+				} else {
+					oMsg.style.color = 'green';
+				}*/
+				oMsg.style.color = (data.code == 1 || data.code == 2) ? 'red' : 'green';
+				oMsg.innerHTML = data.message;
+				
+			}
+			
+		}
+		
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<form action="1.get.php" method="get">
+    	用户名：<input type="text" name="username" id="username" /><span id="msg"></span>
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

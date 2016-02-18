@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+//构造函数：用于创建对象的函数，如果一个函数是构造函数，约定函数首字母大写
+//设计模式：工厂方式
+function Person(name) {
+	//var obj = new Object();
+	this.name = name;
+	this.say = function() {
+		alert('我是' + this.name);
+	}
+	//return obj;
+}
+
+var p1 = new Person('leo');
+//p1.say();
+
+var p2 = new Person('momo');
+//p2.say();
+
+alert(p1.say == p2.say);
+</script>
+</head>
+
+<body>
+</body>
+</html>

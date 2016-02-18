@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+图片
+预加载 ： 预先加载
+
+我们想做一个相册图片的查看功能，有一个相册，这个相册里面有N张图片，用户可以一张张的看图片
+	采取什么方案
+		1.在结构中写好所有的img，然后根据用户当前点击显示对应图片
+			问题：如果图片太多了，那么结构就会复杂，并且会在打开页面的时候就去加载所有的图片资源，这样打开页面就会很慢
+		2.页面中我们就写一个img，然后把所有的图片的地址存储到一个数组中，当用户点击的时候，根据用户现在点击的值去数组中取出对应的图片地址，临时赋值给img的src
+			问题：用户在看一个张图片的时候，因为他是点击的时候临时加载的，所以用户在看这张图片的时候需要临时等待当前这一张图片加载完成
+			
+	比喻：
+		现在我要看一个电视剧，他有40集
+			1.把40集全部下完，然后再看。
+			2.下一集，看一集，看完一集再去下下一集
+			
+			下下来第一集，然后在看第一集的时候下后面的数据，我们可以边看边下
+			
+	如果我们想实现上面的效果，需要用到一个专门下载器
+		Image对象
+			var oImage = new Image();
+				属性
+					src : 当我们给Image对象的src属性赋值的（一个资源的地址）时候，那么这个Image对象就会去加载这个资源，他资源下载到当前浏览器对应的缓存文件夹里面，如果当我们去加载一个被下载过的资源的时候，其实浏览器会首先从他的缓存文件夹中去看下这个资源是否被下载过，如果有的话，那么直接从缓存文件夹中读取。
+				事件
+					onload : 当资源加载完成的时候触发
+					onerror : 当加载资源失败的时候触发
+*/
+
+window.onload = function() {
+	
+	var oImg = document.getElementById('img1');
+	var oV = document.getElementById('v1');
+	var oImage = new Image();
+	
+	for (var attr in oV) {
+		console.log(attr + ' : ' + oV[attr]);
+	}
+	
+	oImage.src = 'http://b.hiphotos.baidu.com/image/w%3D230/sign=f95f702e4334970a4773172ca5cbd1c0/d1160924ab18972b858bb8cbe4cd7b899e510a79.jpg';
+	oImage.onload = function() {
+		alert('下载完成');
+		//oV.play();
+		//oImg.src = 'http://b.hiphotos.baidu.com/image/w%3D230/sign=f95f702e4334970a4773172ca5cbd1c0/d1160924ab18972b858bb8cbe4cd7b899e510a79.jpg';
+	}
+	
+	document.onclick = function() {
+		oImg.src = 'http://b.hiphotos.baidu.com/image/w%3D230/sign=f95f702e4334970a4773172ca5cbd1c0/d1160924ab18972b858bb8cbe4cd7b899e510a79.jpg';
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<video src="" id="v1"></video>
+    <img src="" id="img1" />
+</body>
+</html>

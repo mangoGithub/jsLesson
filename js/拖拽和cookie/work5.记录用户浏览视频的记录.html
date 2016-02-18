@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+li { line-height: 30px;}
+</style>
+<script>
+window.onload = function() {
+	
+	var oUl1 = document.getElementById('ul1');
+	var oUl2 = document.getElementById('ul2');
+	
+	var aLi = oUl1.getElementsByTagName('li');
+	
+	var arr = [];
+	
+	if (getCookie('vList')) {
+		arr = getCookie('vList').split('@^_^@');
+		insert();
+	}
+	
+	for (var i=0; i<aLi.length; i++) {
+		
+		aLi[i].onclick = function() {
+			var _index = arrIndexOf(arr, this.innerHTML);
+			if ( _index != -1 ) {//数组中有点击的值
+				arr.splice( _index, 1 );
+			}
+			arr.unshift(this.innerHTML);
+			insert();
+			
+			setCookie('vList', arr.join('@^_^@'), 5);
+		}
+		
+	}
+	
+	function arrIndexOf(arr, v) {
+		for (var i=0; i<arr.length; i++) {
+			if ( v == arr[i] ) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	function insert() {
+		var html = '';
+		for (var i=0; i<arr.length; i++) {
+			html += '<li>' + arr[i] + '</li>';
+		}
+		oUl2.innerHTML = html;
+	}
+	
+}
+
+function setCookie(key, value, t) {
+	var oDate = new Date();
+	oDate.setDate( oDate.getDate() + t );
+	document.cookie = key + '=' + value + ';expires=' + oDate.toGMTString();
+}
+function getCookie(key) {
+	var arr1 = document.cookie.split('; ');
+	for (var i=0; i<arr1.length; i++) {
+		var arr2 = arr1[i].split('=');
+		if (arr2[0] == key) {
+			return arr2[1];
+		}
+	}
+}
+function delCookie(key) {
+	setCookie(key, '', -1);
+}
+</script>
+</head>
+
+<body>
+	<ul id="ul1">
+    	<li>1.拖拽改变层的大小（左右都可拖拽,带箭头的拖拽）</li>
+        <li>2.拖拽记录位置</li>
+        <li>3.网页换肤记录样式</li>
+        <li>4.登录框记录用户名</li>
+        <li>5.记录用户浏览视频的记录</li>
+        <li>6.自定义滚动条控制页面（配合滚轮）</li>
+        <li>7.输入框中滚轮加减数字</li>
+        <li>8.拖拽回放</li>
+        <li>9.鼠标绘制方块</li>
+    </ul>
+    <hr />
+    <h2>您点击过的列表</h2>
+    <ul id="ul2"></ul>
+</body>
+</html>

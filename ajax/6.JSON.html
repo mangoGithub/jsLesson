@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+JSON 对象
+*/
+//alert(JSON);
+
+//stringify	 : 把对象变成字符串
+//var arr = [1,2,3];
+//alert( typeof JSON.stringify(arr) );
+
+//var j = {left: 100, top: 200};
+//alert( JSON.stringify( j ) 
+
+//parse 把字符串转成对应对象，字符串必须是严格模式，key值必须用""包含
+var s = '{"left":100}';
+var j = JSON.parse(s);
+alert(j.left)
+</script>
+</head>
+
+<body>
+</body>
+</html>

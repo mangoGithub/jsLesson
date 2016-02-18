@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {
+	width: 300px; border: 1px solid #333; padding: 5px; min-height: 20px;	
+}
+</style>
+</head>
+
+<body>
+
+<input type="button" value="展开" />
+<input type="button" value="收缩" />
+
+<div id="div1"></div>
+
+</body>
+</html>
+
+<script>
+
+var str = '一个有趣的问题，貌似跟事件和属性有关，希望管理员能解';
+var aBtn = document.getElementsByTagName('input');
+var oDiv = document.getElementById('div1');
+
+var arr = str.split('');
+var arr2 = [];
+
+var timer = null;
+
+
+aBtn[0].onclick = function(){
+	
+	if( !arr[0] )return;
+	
+	clearInterval(timer);
+	timer = setInterval(function(){
+		
+		arr2.push(arr.shift());
+		
+		oDiv.innerHTML = arr2.join('');
+		
+		if( !arr[0] ){
+			clearInterval(timer);	
+		}
+		
+	},100);
+	
+};
+
+aBtn[1].onclick = function(){
+	
+	if( !arr2[0] )return;
+	
+	clearInterval(timer);
+	timer = setInterval(function(){
+		
+		arr.unshift( arr2.pop() );
+		
+		oDiv.innerHTML = arr2.join('');
+		
+		if( !arr2[0] ){
+			clearInterval(timer);	
+		}
+		
+	},100);
+	
+};
+
+/*
+
+arr  :  个 有 趣 的 问 题
+
+arr2 :	一 
+
+
+
+*/
+
+
+</script>
+

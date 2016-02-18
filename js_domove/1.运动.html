@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height:100px; background: red; position: absolute; left: 0; top: 30px;}
+</style>
+<script>
+/*
+清除定时器
+开启定时器
+改变运动的值 判断是否到达目标，如果到了，则停止定时器
+
+为了性能：当浏览器窗口不在焦点状态的时候（浏览器最小化，当前浏览器标签页被切换的时候），为了节约性能开销，浏览器会自动把页面执行中的定时器频率降低，间隔时间被延长
+*/
+window.onload = function() {
+	
+	var oBtn = document.getElementById('btn');
+	var oDiv = document.getElementById('div1');
+	var iTimer = null;
+	var iStartTime = +new Date();
+	
+	oBtn.onclick = function() {
+		
+		clearInterval(iTimer);
+		
+		iTimer = setInterval(function() {
+			
+			if ( oDiv.offsetLeft == 500 ) {
+				clearInterval(iTimer);
+			} else {
+				oDiv.style.left = oDiv.offsetLeft + 10 + 'px';
+			}
+			
+			console.log( +new Date() - iStartTime );
+			iStartTime = +new Date();
+			
+		}, 30);
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<input type="button" id="btn" value="运动" />
+    <div id="div1"></div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+dt {font-weight: bold; padding: 10px;}
+dd {padding: 10px; border-bottom: 1px solid #000;}
+</style>
+<script type="text/javascript" src="http://player.youku.com/jsapi"></script>
+<script src="ajax.js"></script>
+<script>
+window.onload = function() {
+	
+	var oKeyWord = document.getElementById('keyword');
+	var oBtn = document.getElementById('btn');
+	var oDl = document.getElementById('dl1');
+	var oSearchCount = document.getElementById('search_count');
+	var oYoukuplayer = document.getElementById('youkuplayer');
+	
+	player = null;
+	
+	oBtn.onclick = function() {
+		
+		ajax('get', 'youku/youkuapi.php', 'action=searches_by_keyword&keyword=' + oKeyWord.value, function(data) {
+			
+			var d = JSON.parse(data);
+			
+			//console.log(d);
+			
+			oSearchCount.innerHTML = d.total;
+			var videos = d.videos;
+			var iLen = videos.length;
+			
+			var html = '';
+			
+			for (var i=0; i<iLen; i++) {
+				
+				html += '<dt>' + videos[i].title + '</dt><dd><img _id="'+ videos[i].id +'" src="'+ videos[i].thumbnail +'" /></dd>';
+				
+			}
+			
+			oDl.innerHTML = html;
+			
+			var aImg = oDl.getElementsByTagName('img');
+			for (var i=0; i<aImg.length; i++) {
+			
+				aImg[i].onclick = function(ev) {
+					//alert(this.getAttribute('_id'));
+					var ev = ev || event;
+					
+					oYoukuplayer.style.display = 'block';
+					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+					
+					oYoukuplayer.style.left = (document.documentElement.clientWidth - oYoukuplayer.offsetWidth) / 2 + 'px';
+					oYoukuplayer.style.top = (document.documentElement.clientHeight - oYoukuplayer.offsetHeight) / 2 +  scrollTop + 'px';
+					
+					ev.cancelBubble = true;
+					
+					player = new YKU.Player('youkuplayer',{
+						styleid: '0',
+						client_id: '',
+						vid: this.getAttribute('_id'),
+						autoplay: false
+					});
+					
+				}
+				
+			}
+			
+		});
+		
+	}
+	
+	document.onclick = function() {
+		//oYoukuplayer.style.display = 'none';
+		player.pauseVideo();
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<div id="youkuplayer" style="width:480px;height:400px; position: absolute; display: none; left: 0; top: 0;border:2px solid #000;"></div>
+	<input type="text" id="keyword" /><input type="button" value="搜索视频" id="btn" />
+    <hr />
+    <p>共有 <strong id="search_count">0</strong> 个视频</p>
+    <dl id="dl1">
+    	<!--<dt>title</dt>
+        <dd>
+        	<img src="" />
+        </dd>-->
+    </dl>
+</body>
+</html>

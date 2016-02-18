@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+p {display: none;}
+</style>
+<script>
+function Tab(obj) {
+	this.obj = obj;
+	this.aInput = this.obj.getElementsByTagName('input');
+	this.aP = this.obj.getElementsByTagName('p');
+	this.iLen = this.aInput.length;
+	this.iCur = 0;
+	this.iTimer = null;
+	this.t = 1000;
+	
+	var _this = this;
+	
+	for (var i=0; i<this.iLen; i++) {
+		
+		this.aInput[i].index = i;
+		this.aInput[i].onclick = function() {
+			_this.iCur = this.index;
+			_this.play();
+		}
+		
+	}
+	
+	this.autoPlay();
+	
+	this.obj.onmouseover = function() {
+		_this.stop();
+	}
+	
+	this.obj.onmouseout = function() {
+		_this.autoPlay();
+	}
+}
+Tab.prototype.play = function() {
+	for (var i=0; i<this.iLen; i++) {
+		this.aInput[i].style.background = '';
+		this.aP[i].style.display = 'none';
+	}
+	this.aInput[this.iCur].style.background = 'yellow';
+	this.aP[this.iCur].style.display = 'block';
+}
+Tab.prototype.autoPlay = function() {
+	var _this = this;
+	this.iTimer = setInterval(function() {
+		_this.iCur++;
+		if (_this.iCur == _this.iLen) {
+			_this.iCur = 0;
+		}
+		_this.play();
+	}, this.t);
+}
+Tab.prototype.stop = function() {
+	clearInterval(this.iTimer);
+}
+window.onload = function() {
+	
+	var oDiv1 = document.getElementById('div1');
+	var oDiv2 = document.getElementById('div2');
+	var oBtn = document.getElementById('btn');
+	
+	var t1 = new Tab(oDiv1);
+	
+	var t2 = new Tab(oDiv2);
+	
+	oBtn.onclick = function() {
+		t1.stop();
+	}
+	
+	document.onkeydown = function() {
+		t2.stop();
+		t2.t = 500;
+		t2.autoPlay();
+	}
+	
+}
+
+//alert(str.isLastChar('a'))
+</script>
+</head>
+
+<body>
+	<div id="div1">
+    	<input type="button" value="选项一" style="background: yellow" />
+        <input type="button" value="选项二" />
+        <input type="button" value="选项三" />
+        <p style="display: block;">11111111111111</p>
+        <p>22222222222222222222</p>
+        <p>3333333333333333333</p>
+    </div>
+    <div id="div2">
+    	<input type="button" value="选项一" style="background: yellow" />
+        <input type="button" value="选项二" />
+        <input type="button" value="选项三" />
+        <p style="display: block;">11111111111111</p>
+        <p>22222222222222222222</p>
+        <p>3333333333333333333</p>
+    </div>
+    <input type="button" value="按钮" id="btn" />
+</body>
+</html>

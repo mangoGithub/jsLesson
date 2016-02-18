@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height: 100px; background: red;}
+</style>
+<script>
+window.onload = function() {
+	
+	//str = '1,4,6,8,3,23,4,6,7';
+	
+	var oDiv = document.getElementById('div1');
+	
+	/*
+	ie/chrome : onmousewheel
+		event.wheelDelta
+			上：120
+			下：-120
+	ff : DOMMouseScroll 他必须用addEventListener来实现绑定
+		event.detail
+			上：-3
+			下：3
+			
+	如果当前事件是用on的形式绑定的，那么他触发的默认行为可以通过return false来阻止
+	如果当前事件是通过addEventListener来绑定的，那么他触发的默认行为使用return false无法阻止，需要使用event对象下面的一个方法：
+		event.preventDefault(); 来阻止
+	*/
+	
+	oDiv.onmousewheel = fn1;
+	if (oDiv.addEventListener) {
+		oDiv.addEventListener('DOMMouseScroll', fn1, false);
+	}
+	
+	function fn1(ev) {
+		//alert(1);
+		var ev = ev || event;
+		
+		//alert(ev.wheelDelta);
+		
+		//alert(ev.detail);
+		
+		var b = true;
+		
+		if (ev.wheelDelta) {
+			b = ev.wheelDelta > 0 ? true : false;
+		} else {
+			b = ev.detail < 0 ? true :false;
+		}
+		
+		if (b) {
+			oDiv.style.height = oDiv.offsetHeight - 10 + 'px';
+		} else {
+			oDiv.style.height = oDiv.offsetHeight + 10 + 'px';
+		}
+		
+		if (ev.preventDefault) {
+			ev.preventDefault();
+		}
+		
+		return false;
+		
+	}
+	
+}
+</script>
+</head>
+
+<body style="height: 2000px;">
+	<div id="div1"></div>
+</body>
+</html>

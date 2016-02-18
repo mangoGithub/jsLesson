@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 470px; height: 150px;border: 1px solid #000; margin: 100px auto 0; overflow: hidden; position: relative;}
+ul {margin: 0; padding: 0; position: absolute; left: 0; top: 0;}
+li {list-style:none;}
+img {display: block;}
+p { position: absolute; right: 10px; bottom: 10px;}
+p span {padding: 5px 8px; border: 1px solid #000; background: white;}
+p span.current { background: #f90; border: #f10; color: white; }
+</style>
+
+<script>
+window.onload = function() {
+	
+	var oUl = document.getElementById('ul1');
+	var oP = document.getElementById('p1');
+	var aLi = oUl.getElementsByTagName('li');
+	var aSpan = oP.getElementsByTagName('span');
+	var iLen = aLi.length;
+	var iCur = 0;
+	var iTimer = null;
+	
+	oUl.innerHTML += oUl.innerHTML;
+	
+	autoPlay();
+	
+	function autoPlay() {
+		iTimer = setInterval(function() {
+			
+			iCur++;
+			
+			for (var i=0; i<iLen; i++) {
+				aSpan[i].className = '';
+			}
+			aSpan[iCur%iLen].className = 'current';
+			
+			oUl.iTimer = setInterval(function() {
+				
+				if (oUl.offsetTop == -iCur * 150) {
+					clearInterval(oUl.iTimer);
+					if (iCur == iLen) {
+						//alert(1)
+						iCur = 0;
+						oUl.style.top = '0px';
+					}
+				} else {
+					oUl.style.top = oUl.offsetTop - 10 + 'px';
+				}
+				
+			}, 30);
+			
+		}, 1000);
+	}
+}
+
+/*
+解决这个问题
+*/
+</script>
+</head>
+
+<body>
+	<div id="div1">
+    	<ul id="ul1">
+        	<li><img src="images/1.jpg" /></li>
+            <li><img src="images/2.jpg" /></li>
+            <li><img src="images/3.jpg" /></li>
+            <li><img src="images/4.jpg" /></li>
+            <li><img src="images/5.jpg" /></li>
+        </ul>
+        <p id="p1">
+        	<span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </p>
+    </div>
+</body>
+</html>

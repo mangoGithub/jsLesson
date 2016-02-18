@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+	#ul1 { width: 300px; }
+	#ul1 li { height: 50px; line-height: 50px; margin: 5px 0; font-size: 30px; font-weight: bold;}
+</style>
+</head>
+
+<body>
+
+<ul id="ul1">
+	<li style="background: green;">3</li>
+	<li style="background: red;">2</li>
+	<li style="background: blue;">1</li>
+	<li style="background: orange;">5</li>
+	<li style="background: pink;">4</li>
+</ul>
+
+<input type="button" value="排序" />
+<input type="button" value="随机" />
+
+</body>
+</html>
+
+<script>
+
+var oUl = document.getElementById('ul1');
+var aLi = document.getElementsByTagName('li');
+var aBtn = document.getElementsByTagName('input');
+var arr = toArr(aLi);
+
+var onOff = true;
+
+aBtn[0].onclick = function(){
+	
+	arr.sort( function(a,b){
+	
+		if(onOff){
+			
+		 return a.innerHTML - b.innerHTML; 
+		
+		}
+		
+		return b.innerHTML - a.innerHTML; 
+		
+	} );
+	
+	onOff = !onOff;
+	
+	//alert( arr[2].innerHTML );
+	
+	for(var i=0; i<arr.length; i++){
+	
+		//alert('');
+		oUl.appendChild( arr[i] );
+		
+	}
+		
+	
+};
+
+aBtn[1].onclick = function(){
+
+	arr.sort( function(){ return Math.random()-0.5; } );	
+	
+	for(var i=0; i<arr.length; i++){
+	
+		oUl.appendChild( arr[i] );
+		
+	}
+	
+};
+
+function toArr( args ){
+	
+	var arr = [];
+	
+	for(var i=0; i<args.length; i++){
+		arr.push( args[i] );	
+	}
+	
+	return arr;
+	
+}
+
+
+/*
+
+练习 ： 不断点击按钮，可以实现升序和降序来回不断切换。
+
+*/
+
+</script>
+
+
+

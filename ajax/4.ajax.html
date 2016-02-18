@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script src="jq.js"></script>
+<script>
+//$(); 同步，阻塞模式：前面的工作没有处理完成的时候，后面的代码等待执行
+
+//异步，非阻塞模式：前面的工作没有处理完成的时候，不影响后面代码的执行
+/*setTimeout(function() {
+	alert(1);
+}, 1000);
+alert(2);*/
+window.onload = function() {
+	
+	var oUsername = document.getElementById('username');
+	
+	oUsername.onblur = function() {
+		
+		var xhr = null;
+
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		
+		xhr.onreadystatechange = function() {
+			
+			if (xhr.readyState == 4) {
+				
+				alert(xhr.responseText);
+				
+			}
+			
+		}
+		
+		/*
+		open(提交方式，url，是否异步)
+			提交方式：
+				get
+					ajax不负责收集表单内容，所有发送数据的键值需要我们根据实际情况手动填写
+				post
+			是否异步
+				异步 : 无阻塞 true，现在的请求不阻塞后续代码执行
+				同步 : 阻塞 false，现在的请求没完成的时候后续代码不执行，一直到当前的工作完成
+		*/
+		xhr.open('get', 'checkUsername.php?username=' + oUsername.value, false);
+		xhr.send();//这里需要时间
+		
+		alert('miaov');
+		
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<form action="1.get.php" method="get">
+    	用户名：<input type="text" name="username" id="username" />
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+var str1 = '2014-3-13';
+var str2 = '2014/3/13';
+var str3 = '2014.3.13';
+var str4 = '2014-3.13';
+
+//2014年3月13日
+//[] : 范围选择
+//. 任意字符，出了换行
+//() : 子项  1*(2+1)
+//replace 第一个参数是前面正则表达式当前匹配的全部内容，后面还可以接收更多的参数，从第二个开始，对应的前面表达式中的子项匹配的内容
+
+alert( format(str1) );
+alert( format(str2) );
+alert( format(str3) );
+alert( format(str4) );
+
+function format(str) {
+	return str.replace(/(\d+)[-\.\/](\d+)[-\.\/](\d+)/g,function(v, a, b, c) {
+		//alert(a);
+		
+		return a + '年' + b + '月' + c + '日';
+	});
+}
+</script>
+</head>
+
+<body>
+</body>
+</html>

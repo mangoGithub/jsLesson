@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body { margin: 0; height: 2000px; }
+div { width: 80px; height: 150px; top: 0; position: fixed; _position: absolute; }
+#left { left: 0; background: red;}
+#right { right: 0; background: blue; }
+
+
+</style>
+</head>
+
+<body>
+
+<div id="left"></div>
+<div id="right"></div>
+
+</body>
+</html>
+
+<script>
+
+var oLeft = document.getElementById('left');
+var oRight = document.getElementById('right');
+
+
+window.onload = window.onresize = window.onscroll = function(){
+	
+	var iTop = ( view().h - oLeft.offsetHeight ) / 2;
+	
+	if( isIe6() )iTop += scrollY();
+	
+	oLeft.style.top = oRight.style.top = iTop + 'px';
+	
+};
+
+
+
+
+function scrollY(){
+	return document.body.scrollTop || document.documentElement.scrollTop;
+}
+
+
+function offsetH(){
+	return document.body.offsetHeight;	
+}
+
+function scrollH(){
+	return document.body.scrollHeight;	
+}
+
+function view(){
+	return {
+		w : document.documentElement.clientWidth,
+		h :	document.documentElement.clientHeight
+	}	
+}
+
+
+
+function isIe6(){
+
+	var str = window.navigator.userAgent.toLowerCase();
+	if( str.indexOf('msie 6') !=-1 )return true;
+	return false;
+	
+}
+
+
+
+</script>

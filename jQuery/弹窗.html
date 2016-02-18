@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body {margin: 0;}
+#mask { position: absolute; left: 0; top: 0; background: black; opacity: 0.3; z-index: 1; display: none;}
+#box {width: 300px; height: 200px; border: 5px solid #333; background: white; position: absolute; left: 0; top: 0; padding: 10px; z-index: 2; display: none;}
+#close { position: absolute; right: 5px; top: 5px;}
+</style>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+$(function() {
+	
+	$('#btn').on('click', function() {
+		
+		$('#mask').show().css({
+			width : $(document).innerWidth(),
+			height : $(document).innerHeight(),
+		});
+		
+		$('#box').show().css({
+			left : ( $(window).innerWidth() - $('#box').outerWidth() ) / 2 + $(document).scrollLeft(),
+			top :  ( $(window).innerHeight() - $('#box').outerHeight() ) / 2 + $(document).scrollTop()
+		});
+		
+		$('#close').on('click', function() {
+			$('#mask,#box').hide();
+		});
+		
+	});
+	
+	$(window).on('scroll', function() {
+		$('#box').css({
+			left : ( $(window).innerWidth() - $('#box').outerWidth() ) / 2 + $(document).scrollLeft(),
+			top :  ( $(window).innerHeight() - $('#box').outerHeight() ) / 2 + $(document).scrollTop()
+		});
+	});
+	
+	$(window).on('resize', function() {
+		$('#box').css({
+			left : ( $(window).innerWidth() - $('#box').outerWidth() ) / 2 + $(document).scrollLeft(),
+			top :  ( $(window).innerHeight() - $('#box').outerHeight() ) / 2 + $(document).scrollTop()
+		});
+		$('#mask').css({
+			width : $(document).innerWidth(),
+			height : $(document).innerHeight(),
+		});
+	});
+	
+});
+</script>
+</head>
+
+<body style="height:2000px">
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+	<input type="button" value="登陆" id="btn" />
+    
+    <div id="mask"></div>
+    <div id="box"><span id="close">关闭</span></div>
+</body>
+</html>

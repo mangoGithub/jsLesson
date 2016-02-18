@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 470px; height: 150px;border: 1px solid #000; margin: 100px auto 0; overflow: hidden; position: relative;}
+ul {margin: 0; padding: 0; position: absolute; left: 0; top: 0;}
+li {list-style:none;}
+img {display: block;}
+p { position: absolute; right: 10px; bottom: 10px;}
+p span {padding: 5px 8px; border: 1px solid #000; background: white;}
+p span.current { background: #f90; border: #f10; color: white; }
+</style>
+<script src="tween.js"></script>
+<script>
+window.onload = function() {
+	
+	var oUl = document.getElementById('ul1');
+	var oP = document.getElementById('p1');
+	var aLi = oUl.getElementsByTagName('li');
+	var aSpan = oP.getElementsByTagName('span');
+	var iLen = aLi.length;
+	var iCur = 0;
+	var iTimer = null;
+	
+	oUl.innerHTML += oUl.innerHTML;
+	
+	autoPlay();
+	
+	function autoPlay() {
+		iTimer = setInterval(function() {
+			
+			iCur++;
+			
+			for (var i=0; i<iLen; i++) {
+				aSpan[i].className = '';
+			}
+			aSpan[iCur%iLen].className = 'current';
+			
+			doMove(oUl, {
+				top : -iCur * 150
+			}, 'backOut', 1000, function() {
+				if (iCur == iLen) {
+					iCur = 0;
+					oUl.style.top = '0px';
+				}
+			});
+			
+		}, 2000);
+	}
+}
+
+
+function doMove(obj, json, fx, d, fn, fn2) {
+	var iTimer = 'iTimer_' + (+new Date());
+	clearInterval(obj[iTimer]);
+	var iStartTime = +new Date();
+	var b = {};
+	var c = {};
+	var d = d || 1000;
+	var fx = fx || 'linear';
+	
+	for (var attr in json) {
+		if ( attr == 'opacity' ) {
+			b[attr] = Math.round ( css( obj, 'opacity' ) * 100 );
+		} else {
+			b[attr] = parseInt( css( obj, attr ) );
+		}
+		c[attr] = json[attr] - b[attr];
+	}
+	
+	obj[iTimer] = setInterval(function() {
+		
+		var t = +new Date() - iStartTime;
+		
+		t = Math.min( t, d );
+
+		for (var attr in json) {
+			
+			var v = Tween[fx](t, b[attr], c[attr], d);
+			if ( attr == 'opacity' ) {
+				obj.style.opacity = v / 100;
+				obj.style.filter = 'alpha(opacity='+v+')';
+			} else {
+				obj.style[attr] = v + 'px';
+			}
+			
+		}
+		
+		fn2 && fn2(t, d);
+		
+		if ( t == d ) {
+			clearInterval(obj[iTimer]);
+			fn && fn();
+		}
+		
+	}, 15);
+}
+
+function css(obj, attr) {
+	if (obj.currentStyle) {
+		return obj.currentStyle[attr];
+	} else {
+		return getComputedStyle(obj, false)[attr];
+	}
+}
+</script>
+</head>
+
+<body>
+	<div id="div1">
+    	<ul id="ul1">
+        	<li><img src="images/1.jpg" /></li>
+            <li><img src="images/2.jpg" /></li>
+            <li><img src="images/3.jpg" /></li>
+            <li><img src="images/4.jpg" /></li>
+            <li><img src="images/5.jpg" /></li>
+        </ul>
+        <p id="p1">
+        	<span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </p>
+    </div>
+</body>
+</html>

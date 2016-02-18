@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+//window.onload
+$(function() {
+	/*
+	选择器：选择元素的方法
+	css选择器：
+		*
+		tagname
+		id
+		class
+		筛选
+		层级
+		
+	js选择器
+		getElementById
+	*/
+	
+	//matched elements : 匹配的元素（结果集合）
+	
+	//*
+	console.log($('*'))
+	
+	//$('*').css('background', 'red');
+	
+	//id
+	//$('#div1').css('background', 'red');
+	
+	//tagname
+	//$('div').css('background', 'red');
+	
+	//class
+	//$('.box').css('background', 'red');
+	
+	//筛选 li.box
+	//$('li.box').css('background', 'red');
+	
+	//层级
+	//$('div p').css('background', 'red');
+	
+	//$('div:hidden').css('background', 'red');
+	
+	//在jq中大部分的操作都被函数所替代，比如设置样式，获取html内容等等
+	//Description: Set the HTML contents of each element in the set of matched elements.
+	//为选中的每一个元素设置html内容
+	//$('div').html('ssss');
+	
+	//Description: Get the HTML contents of the first element in the set of matched elements.
+	//获取结果集中第一个元素的html内容
+	//alert( $('div').html() );
+	
+	//设置：针对所有结果
+	//获取：返回的是结果中第一个
+	
+	//$('div').html('ssss').css('background','red');
+	
+	//$('div').html().css('background','red');
+	
+	//$('div').innerHTML = '';//没有意义
+	
+	 var oDiv = document.getElementById('div1');
+	 
+	 oDiv.html();//错的
+});
+</script>
+</head>
+
+<body>
+	<div id="div1" style="display:-none;">div1<p>pppppp</p></div>
+    <div id="div2">div2</div>
+    <div id="div3" class="box">div3</div>
+    <p>pppppp</p>
+    <ul id="ul1">
+    	<li>111111111</li>
+        <li>22222222222</li>
+        <li>333333333333</li>
+        <li class="box">44444444444</li>
+        <li>55555555555</li>
+    </ul>
+     <ul id="ul2">
+    	<li>111111111</li>
+        <li>22222222222</li>
+        <li>333333333333</li>
+        <li class="box">44444444444</li>
+        <li>55555555555</li>
+    </ul>
+</body>
+</html>

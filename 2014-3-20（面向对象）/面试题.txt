@@ -1,0 +1,30 @@
+
+	var me = Man({ fullname: "小红" });
+	me.attr("fullname", "小明");
+
+	me.attr({
+		"words-limit": 3,
+		"words-emote": "微笑"
+	});
+	me.words("我喜欢看视频。");
+	me.words("我们的办公室太漂亮了。");
+	me.words("视频里美女真多！");
+	me.words("我平时都看优酷！");
+	
+	
+	alert(me.say());
+
+	//小明微笑："我喜欢看视频。我们的办公室太漂亮了。视频里美女真多！"
+
+	me.attr({
+		"words-limit": 2,
+		"words-emote": "喊"
+	});
+
+	alert(me.say());
+	
+
+	//小明喊："我喜欢看视频。我们的办公室太漂亮了。"
+	
+
+

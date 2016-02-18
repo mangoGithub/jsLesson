@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<input type="text" />
+<input type="button" value="发表" />
+
+<ul id="ul1"></ul>
+
+</body>
+</html>
+
+<script>
+
+var aInput = document.getElementsByTagName('input');
+var oUl = document.getElementById('ul1');
+
+aInput[1].onclick = function(){
+
+	var s = aInput[0].value;
+	
+	if(!s)return;
+	
+	if(oUl.children[4]){
+		oUl.removeChild(oUl.children[4]);
+	}
+	
+	var oLi = document.createElement('li');
+	oLi.innerHTML = s;
+	
+	oUl.insertBefore(oLi,oUl.firstChild);	
+	
+};
+
+
+
+</script>

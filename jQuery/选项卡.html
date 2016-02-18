@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+p {display: none;}
+div{
+	width:100px; height:100px;
+background:green; /* for FireFox */
+*background:red; /* for IE7 */
+_background:blue; /* for IE6 */
+}
+</style>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+$(function() {
+	
+	//on(事件名称，绑定函数)
+	
+	$('input').on('click', function() {
+		//this -> 触发当前事件的DOM元素
+		//alert(this.value);
+		//DOM对象转JQ对象 ： $(DOM)  $(document) $(window)
+		
+		$('input').css('background', '');
+		$('p').css('display', 'none');
+		
+		$(this).css('background', 'yellow');
+		$('p').eq( $(this).index('input') ).css('display', 'block');
+		
+	});
+	
+});
+</script>
+</head>
+
+<body>
+<div></div>
+	<input type="button" value="选项一" style="background: yellow" />
+    <spsn>|</span>
+    <input type="button" value="选项二" />
+    <spsn>|</span>
+    <input type="button" value="选项三" />
+    <p style="display: block;">11111111111</p>
+    <p>22222222222222</p>
+    <p>33333333333333</p>
+</body>
+</html>

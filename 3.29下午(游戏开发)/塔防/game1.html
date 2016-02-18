@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{ margin:0; padding:0;}
+#div1{ margin:20px auto; position:relative;}
+.box1{ width:50px; height:50px; background:black; float:left;}
+.box2{ width:50px; height:50px; background:white; float:left;}
+.box3{ width:50px; height:50px; background:yellow; float:left; line-height:50px; text-align:center;}
+.box4{ width:50px; height:50px; background:blue; float:left; line-height:50px; text-align:center;}
+.boxActive{ background:red;}
+
+.gw1{ width:50px; height:50px; background:url(img/gw1.jpg) no-repeat; position:absolute;}
+.pt1{ width:50px; height:50px; background:url(img/pt1.jpg) no-repeat; float:left;}
+
+.bullet{ width:5px; height:5px; background:blue; position:absolute;}
+</style>
+<script>
+window.onload = function(){
+	Game.init(); // 游戏go!
+};
+
+/****
+	var Information = {
+		Works ：TF1.0,
+		Author ：小D,
+		Product ：http://www.miaov.com,
+		Contact : http://www.miaov.com
+	}
+****/
+
+var Game = {
+	arrMap : [       //地图
+		1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,
+		1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,
+		1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1,1,1
+	],
+	arrRoute : [     //线路
+		0,'1B',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,'2R','3B',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,'4R',0,'5B',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,'6R',0,0,0,0,0,0,0,0,0,0,0,'7B',0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,'9B',0,0,0,0,0,0,0,0,'8L',0,0,0,
+		0,0,0,0,0,0,0,'10B',0,0,0,0,0,0,0,0,0,0,0,0
+	],
+	arrDir : [],     //方向坐标(根据arrRoute)
+	arrNum : [],     //方向计数(根据arrRoute)
+	mapCol : 20,     //地图的列(根据arrMap)
+	routeNum : 10,   //方向总计(根据arrRoute)
+	
+	enemyNum : 20,   //敌人个数
+	enemyClass : 'gw1',  //敌人样式
+	enemySpeed : 5,   //敌人速度
+	enemyBlood : 200,  //敌人血量
+	enemyMoney : 10,   //敌人所值的钱
+	ptClass : 'pt1',   //炮塔样式
+	ptMoney : 50,      //炮塔价格
+	bulletSpeed : 10,   //子弹速度基数
+	bulletPower : 20,   //子弹力量
+	bulletRange : 200,      //子弹范围
+	
+	init : function(){   //程序入口
+		this.elems();
+		this.createMap();
+		this.bindEvents();
+	},
+	elems : function(){  //收集元素
+		this.oParent = document.getElementById('div1');
+		this.startBtn = document.getElementById('input1');
+		this.moneyBtn = document.getElementById('input2');
+	},
+	createMap : function(){   //创建地图
+		for(var i=0;i<this.arrMap.length;i++){
+			var oBox = document.createElement('div');
+			oBox.className = 'box'+this.arrMap[i];
+			if(oBox.className == 'box3'){
+				oBox.innerHTML = '起点';
+			}
+			else if(oBox.className == 'box4'){
+				oBox.innerHTML = '终点';
+			}
+			this.oParent.appendChild(oBox);
+		}
+		
+		for(var i=1;i<=this.routeNum;i++){	
+			for(var j=0;j<this.arrRoute.length;j++){
+				if( parseInt(this.arrRoute[j]) == i ){
+					this.arrDir.push( this.arrRoute[j].substring(this.arrRoute[j].length-1) );
+					this.arrNum.push( j );
+				}
+			}
+		}
+		
+		this.arrDir.pop();
+		this.arrNum.shift();
+		
+		this.oParent.style.width = oBox.offsetWidth * this.mapCol + 'px';
+	},
+	bindEvents : function(){  //绑定相关事件
+		var This = this;
+		var bBtn = true;
+		this.startBtn.onclick = function(){
+			This.createEnemy();
+			if(bBtn){
+				This.toPos();
+				bBtn = false;
+			}
+			
+		};
+		
+		var aDiv = this.getByClass(this.oParent,'box1');
+		for(var i=0;i<aDiv.length;i++){
+			aDiv[i].onmouseover = function(){
+				This.addClass(this,'boxActive');
+			};
+			aDiv[i].onmouseout = function(){
+				This.removeClass(this,'boxActive');
+			};
+			aDiv[i].onclick = function(){
+				This.createTurr(this);
+			};
+		}
+	},
+	createEnemy : function(){  //创建敌人
+		var timer = null;
+		var This = this;
+		if(!this.enemyNum){
+			clearTimeout(timer);
+		}
+		else{
+			this.enemy();		
+			timer = setTimeout(function(){
+				This.enemyNum--;
+				This.createEnemy();
+			},1000);
+		}
+	},
+	enemy : function(){  //敌人出动
+		var iNow = 0;
+		var strat = this.getByClass(this.oParent,'box3')[0];
+		var pos = this.runMapping();
+		var oDiv = document.createElement('div');
+		var This = this;
+		oDiv.className = this.enemyClass;
+		oDiv.blood = this.enemyBlood;
+		oDiv.style.left = strat.offsetLeft + 'px';
+		oDiv.style.top = strat.offsetTop + 'px';
+		this.oParent.appendChild(oDiv);
+		
+		oDiv.timer = setInterval(function(){
+			
+			if( Math.abs(pos.value[This.arrNum.length-1] - parseInt(This.getCss(oDiv,pos.attr[This.arrNum.length-1]))) <= 1 ){
+				clearInterval(oDiv.timer);
+				alert('游戏结束');
+				window.location.reload();
+			}
+			
+			if( Math.abs(pos.value[iNow] - parseInt(This.getCss(oDiv,pos.attr[iNow]))) <= 1 ){
+				iNow++;	
+			}
+			
+			oDiv.style[pos.attr[iNow]] = parseInt(This.getCss(oDiv,pos.attr[iNow])) + pos.iSpeed[iNow] + 'px';
+			
+		},30);
+	},
+	createTurr : function(obj){   //创建炮塔
+		var alls = parseInt(this.moneyBtn.value);
+		
+		if(alls>=this.ptMoney){
+			obj.className = this.ptClass;
+			this.moneyBtn.value = alls - this.ptMoney + '￥';
+		}
+	},
+	toPos : function(){   //监控炮塔
+		var aPt = this.getByClass(this.oParent,this.ptClass);
+		var This = this;
+		for(var i=0;i<aPt.length;i++){
+			this.toBullet(aPt[i]);
+		}
+		setTimeout(function(){
+			This.toPos();
+		},100);
+	},
+	toBullet : function(obj){  //监控子弹
+		var aEnemy = this.getByClass(this.oParent,this.enemyClass);
+		
+		obj.arr = [];
+		
+		for(var i=0;i<aEnemy.length;i++){
+			
+			if( this.dis(obj,aEnemy[i]) < this.bulletRange ){
+				obj.arr.push( aEnemy[i] );
+			}
+		}
+		
+		//if(!obj.bBtn){
+			this.createBullet(obj);
+			//obj.bBtn = true;
+		//}
+	},
+	createBullet : function(obj){  //创建子弹
+		var oBu = document.createElement('span');
+		var This = this;
+		oBu.className = 'bullet';
+		oBu.style.left = obj.offsetLeft + obj.offsetWidth/2 + 'px';
+		oBu.style.top = obj.offsetTop + obj.offsetHeight/2 + 'px';
+		obj.appendChild(oBu);
+		this.toRun(obj,oBu);
+		/*setTimeout(function(){
+			This.createBullet(obj);
+		},100);*/
+	},
+	toRun : function(obj,oBu){   //子弹杀敌
+		var timer = null;
+		var This = this;
+		timer = setInterval(function(){
+			
+			if(!obj.arr.length){ 
+				clearInterval(timer);
+				var aBu = This.getByClass(obj,'bullet');
+				for(var i=0;i<aBu.length;i++){
+					obj.removeChild(aBu[i]);
+				}
+				return false; 
+			}
+			
+			var x1 = obj.arr[obj.arr.length-1].offsetLeft + obj.arr[obj.arr.length-1].offsetWidth/2;
+			var y1 = obj.arr[obj.arr.length-1].offsetTop + obj.arr[obj.arr.length-1].offsetHeight/2;
+			var x2 = oBu.offsetLeft;
+			var y2 = oBu.offsetTop;
+			
+			var dis = Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+			var argX = (x1 - x2)/dis;
+			var argY = (y1 - y2)/dis;
+			
+			x2 += argX * This.bulletSpeed;
+			y2 += argY * This.bulletSpeed;
+			
+			oBu.style.left = x2 + 'px';
+			oBu.style.top = y2 + 'px';
+			
+			if( This.pz(oBu,obj.arr[obj.arr.length-1]) ){
+				clearInterval(timer);
+				obj.arr[obj.arr.length-1].blood -= This.bulletPower;
+				if( obj.arr[obj.arr.length-1].blood == 0 ){
+					This.moneyBtn.value = parseInt(This.moneyBtn.value) + This.enemyMoney + '￥';
+					clearInterval( obj.arr[obj.arr.length-1].timer );
+					This.oParent.removeChild(obj.arr[obj.arr.length-1]);
+				}		
+				obj.removeChild(oBu);
+			}
+			
+		},30);
+	},
+	runMapping : function(){  //移动映射
+		var aDiv = this.oParent.getElementsByTagName('div');
+		var pos = {
+			iSpeed : [],
+			attr : [],
+			value : []
+		};
+		
+		for(var i=0;i<this.arrDir.length;i++){
+			switch(this.arrDir[i]){
+				case 'B':
+					pos.iSpeed.push( this.enemySpeed );
+					pos.attr.push( 'top' );
+					pos.value.push( aDiv[this.arrNum[i]].offsetTop );
+				break;
+				case 'T':
+					pos.iSpeed.push( -this.enemySpeed );
+					pos.attr.push( 'top' );
+					pos.value.push( aDiv[this.arrNum[i]].offsetTop );
+				break;
+				case 'L':
+					pos.iSpeed.push( -this.enemySpeed );
+					pos.attr.push( 'left' );
+					pos.value.push( aDiv[this.arrNum[i]].offsetLeft );
+				break;
+				case 'R':
+					pos.iSpeed.push( this.enemySpeed );
+					pos.attr.push( 'left' );
+					pos.value.push( aDiv[this.arrNum[i]].offsetLeft );
+				break;
+			}
+		}
+		
+		return pos;
+	},
+	pz : function(obj1,obj2){   //碰撞检测
+		var L1 = obj1.offsetLeft;
+		var R1 = obj1.offsetLeft + obj1.offsetWidth;
+		var T1 = obj1.offsetTop;
+		var B1 = obj1.offsetTop + obj1.offsetHeight;
+		
+		var L2 = obj2.offsetLeft;
+		var R2 = obj2.offsetLeft + obj2.offsetWidth;
+		var T2 = obj2.offsetTop;
+		var B2 = obj2.offsetTop + obj2.offsetHeight;
+		
+		if(L1>R2 || R1<L2 || B1<T2 || T1>B2){
+			return false;
+		}
+		else{
+			return true;
+		}
+	},
+	dis : function(obj1,obj2){   //两点距离
+		var a = (obj1.offsetLeft + obj1.offsetWidth/2) - (obj2.offsetLeft + obj2.offsetWidth/2);
+		var b = (obj1.offsetTop + obj1.offsetHeight/2) - (obj2.offsetTop + obj2.offsetHeight/2);
+		return Math.sqrt( Math.pow(a,2) + Math.pow(b,2) );
+	},
+	getByClass : function(oParent,sClass){   //获取一组class元素
+		var aEle = oParent.getElementsByTagName('*');
+		var arr = [];
+		for(var i=0;i<aEle.length;i++){
+			if(aEle[i].className == sClass){
+				arr.push( aEle[i] );
+			}
+		}
+		return arr;
+	},
+	getCss : function(obj,attr){   //获取最终样式
+		if(obj.currentStyle){
+			return obj.currentStyle[attr];	
+		}
+		else{
+			return getComputedStyle(obj,false)[attr];	
+		}
+	},
+	addClass : function(obj,sClass){   //追加样式
+		var arr = obj.className.split(' ');
+		var bBtn = true;
+		for(var i=0;i<arr.length;i++){
+			if(arr[i] == sClass){
+				bBtn = false;
+			}
+		}
+		
+		if(bBtn){
+			arr.push(sClass);
+		}
+		obj.className = arr.join(' ');
+	},
+	removeClass : function(obj,sClass){  //删除样式
+		var arr = obj.className.split(' ');
+		var index = -1;
+		
+		for(var i=0;i<arr.length;i++){
+			if(arr[i] == sClass){
+				index = i;
+			}
+		}
+		
+		if(index!=-1){	
+			arr.splice(index,1);
+		}
+		
+		obj.className = arr.join(' ');
+	}
+};
+</script>
+</head>
+
+<body>
+<input type="button" id="input1" value="开始" />
+<input type="button" id="input2" value="200￥" />
+<div id="div1"></div>
+</body>
+</html>

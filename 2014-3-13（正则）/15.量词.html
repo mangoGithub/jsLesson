@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+量词
+
+{n} : 出现n次
+{n,} : 最少n次，最多不限
+{n,m} : 最少n次，最多m次
+
++ : 最少一次，最多不限 {1,}
+* : 最少0次，最多不限 {0,}
+? : 最少0次，最多1次 {0,1}
+*/
+
+//qq验证
+var qq = '200824584';
+
+/*if (/^[1-9]\d{4,11}$/.test(qq)) {
+	alert('是qq'); 
+} else {
+	alert('不是qq');
+}*/
+
+//trim : 去除字符串首尾空格
+/*var username = '    a b     ';
+if (username.length < 3) {
+	
+}*/
+
+var str = '     s b   ';
+
+//alert( '(' + str.replace(/^\s+|\s+$/g, '') + ')' );
+
+//alert( '\u9fa5' );
+
+var re = {
+	qq : /[1-9][0-9]{4,9}/,
+	email : /^\w+@[a-z0-9]+(\.[a-z]+){1,3}$/
+}
+
+//re.qq.test('200')
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

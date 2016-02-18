@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+
+<script>
+
+/*
+
+	需要 100 个 从 0 ~ 1000 之间的随机不重复数字。
+
+*/
+
+alert( getNum() );
+
+/*function getNum(){ //
+
+	var arr = [];
+	
+	for(var i=0; i<=1000; i++){
+		arr.push( i );	
+	}
+	
+	//alert( arr.length );
+	arr.sort( function(){ return Math.random()-0.5; } );
+	arr.length = 100;
+	
+	arr.sort( function(a,b){return a-b; });
+	
+	return arr;
+}*/
+
+function getNum(){
+
+	var arr = [];
+	var json = {};
+	
+	// {10: 1}
+	
+	while(arr.length < 100){
+		
+		var iNum = Math.round( Math.random()*1000 );
+		
+		if( !json[iNum] ){ // json[10]
+	
+			json[iNum] = 1; //必须是一个真值才能判断出是否有重复的值
+			arr.push( iNum );
+		
+		}
+		
+	}
+		
+	arr.sort( function(a,b){return a-b; });
+	return arr;
+}
+
+
+</script>

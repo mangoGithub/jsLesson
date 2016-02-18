@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+Array,String,Boolean,Number,Date,Image...
+*/
+
+Array.prototype.count = function() {
+	var result = this[0];
+	for (var i=1; i<this.length; i++) {
+		result += this[i];
+	}
+	return result;
+}
+Array.prototype.push = function() {
+	alert(1);
+}
+
+var arr1 = new Array(1,2,3,4);
+/*arr1.count = function() {
+	var result = this[0];
+	for (var i=1; i<this.length; i++) {
+		result += this[i];
+	}
+	return result;
+}*/
+alert( arr1.count() );
+
+var arr2 = new Array(10,20,30,40);
+alert( arr2.count() );
+</script>
+</head>
+
+<body>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+$(function() {
+	
+	//$('<div>');
+	
+	//insertBefore
+	//$('<p>').html('pppppp').insertBefore($('#div1'));
+	//before
+	//$('#div1').before( $('<p>').html('pppppp') );
+	
+	//insertAfter
+	//$('<p>').html('pppppp').insertAfter($('#div1'));
+	//after
+	//$('#div1').after( $('<p>').html('pppppp') );
+	
+	//append
+	//$('#ul1').append($('<li>').html('00000000000'));
+	//appendTo
+	//$('<li>').html('00000000000').appendTo($('#ul1'));
+	
+	//prepend
+	//$('#ul1').prepend($('<li>').html('00000000000'));
+	//prependTo
+	//$('<li>').html('00000000000').prependTo($('#ul1'));
+	
+	$('#ul1').remove();
+	
+});
+</script>
+</head>
+
+<body>
+	<div id="div1" style="width: 100px; height: 100px; padding: 10px; border: 1px; margin: 10px; border: 1px solid red;"></div>
+    <ul id="ul1">
+    	<li>11111111111</li>
+        <li>222222222222</li>
+        <li>3333333333</li>
+        <li>44444444444</li>
+    </ul>
+</body>
+</html>

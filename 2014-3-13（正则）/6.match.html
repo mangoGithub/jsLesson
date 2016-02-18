@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+字符串.match(规则);   从字符串中去查找符合规则的内容，如果有的话，则把符合规则的内容作为数组返回
+*/
+
+var str = 'jk32kjh342hj 3424hj324hj234kl6';
+
+/*
+特性，模式
+	1.懒惰
+	2.贪婪
+	
+量词
+	+ : 对匹配规则数量的说明 最少一次，最多n次
+	
+修饰符	[global] g 全局匹配
+*/
+
+alert( str.match(/\d+/g) );
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

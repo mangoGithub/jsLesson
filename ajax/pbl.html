@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#ul1 {margin: 100px auto 0;}
+li {width: 212px; float: left; list-style: none; margin-right: 10px;}
+#ul1 div { padding: 5px; border: 1px solid #000; margin-bottom: 10px; }
+img {width: 200px; display: block;}
+#loader { position: fixed; bottom: 0; left: 0; height: 50px; background: url("loading.gif") no-repeat center; width: 100%; display: none;}
+</style>
+<script src="ajax.js"></script>
+<script>
+window.onload = function() {
+	
+	var oUl = document.getElementById('ul1');
+	var aLi = oUl.getElementsByTagName('li');
+	var oLoader = document.getElementById('loader');
+	var iLen = aLi.length;
+	var iPage = 1;
+	var bOpen = true;
+	
+	loadImage();
+	
+	function loadImage() {
+		
+		oLoader.style.display = 'block';
+		
+		ajax('get', 'getPics.php', 'cpage=' + iPage, function(data) {
+			//console.log(data);
+			
+			var d = JSON.parse( data );
+			
+			if (!d.length) {
+				return ;
+			}
+			
+			for (var i=0; i<d.length; i++) {
+				
+				var oDiv = document.createElement('div');
+				
+				var oImg = document.createElement('img');
+				oImg.style.height = d[i].height * ( 200 / d[i].width );
+				oImg.src = d[i].preview;
+				oDiv.appendChild(oImg);
+				
+				//找出高度最短的li
+				var _index = getShortLi();
+				
+				aLi[_index].appendChild(oDiv);
+				
+			}
+			
+			oLoader.style.display = 'none';
+			bOpen = true;
+			
+		});
+		
+	}
+	
+	window.onscroll = function() {
+		
+		var _index = getShortLi();
+		var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		
+		if ( getTop(aLi[_index]) + aLi[_index].offsetHeight < document.documentElement.clientHeight + scrollTop ) {
+			//alert(_index);
+			
+			if (!bOpen) {
+				return ;
+			}
+			bOpen = false;
+			
+			iPage++;
+			loadImage();
+			
+		}
+		
+	}
+	
+	function getTop(obj) {
+		var iTop = 0;
+		while(obj) {
+			iTop += obj.offsetTop;
+			obj = obj.offsetParent;
+		}
+		return iTop;
+	}
+	
+	function getShortLi() {
+		var index = 0;
+		var ih = aLi[index].offsetHeight;
+		for (var i=0; i<iLen; i++) {
+			if ( aLi[i].offsetHeight < ih ) {
+				index = i;
+				ih = aLi[i].offsetHeight;
+			}
+		}
+		return index;
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<ul id="ul1">
+    	<li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div id="loader"></div>
+</body>
+</html>

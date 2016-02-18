@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+[规则] 从[]表示的规则中选择一个进行匹配
+[abc] a|b|c
+*/
+
+/*var str = 'abc';
+alert(/a[abc]c/.test(str));*/
+
+var str = 'abc';
+//a-z A-Z 0-9
+//alert(/a[a-z0-9]c/.test(str));
+
+/*
+[^规则]
+*/
+var str = 'abc';
+alert(/a[^abc]c/.test(str));
+</script>
+</head>
+
+<body>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body { height: 2000px; margin: 0; }
+#mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: 0.3; filter: alpha(opacity: 30); display: none; }
+#box { position: fixed; _position: absolute; left: 0; top: 0; width: 300px; height: 300px; border: 5px solid #333; background: #fff; display: none; }
+#box span { position: absolute; right: 5px; top: 5px; font-size: 30px; font-family: Arial; font-weight: bold;  cursor: pointer;}
+</style>
+</head>
+
+<body>
+
+<input type="button" id="btn" value="登陆" />
+
+<!--<div id="mask"></div>
+<div id="box"><span>X</span></div>-->
+
+</body>
+</html>
+
+<script>
+
+var oMask = null;
+var oBox = null;
+
+var oBtn = document.getElementById('btn');
+
+oBtn.onclick = function(){
+
+	if(!oMask){
+		
+		oMask = document.createElement('div');
+		oBox = document.createElement('div');
+		
+		oMask.id = 'mask';
+		oBox.id = 'box';
+		oBox.innerHTML = '<span>X</span>';
+		
+		document.body.appendChild(oMask);
+		document.body.appendChild(oBox);
+		
+	}
+	
+	fnOpen();
+	
+};
+
+
+function fnOpen(){
+	
+	var iH = Math.max(offsetH(),scrollH(),view().h);
+	var oSpan = oBox.getElementsByTagName('span')[0];
+	
+	oSpan.onclick = function(){
+		
+		oMask.style.display = 'none';
+		oBox.style.display = 'none';
+		
+	};
+	
+	oMask.style.height = iH + 'px';
+	oMask.style.display = 'block';
+	oBox.style.display = 'block';
+	
+	var iLeft = ( view().w - oBox.offsetWidth ) / 2;
+	var iTop = ( view().h - oBox.offsetHeight ) / 2;
+	
+	oBox.style.left = iLeft + 'px';
+	oBox.style.top = iTop + 'px';
+
+	
+	window.onresize = window.onscroll = function(){
+		
+		var iLeft = ( view().w - oBox.offsetWidth ) / 2;
+		var iTop = ( view().h - oBox.offsetHeight ) / 2;
+		
+		if( isIe6() )iTop += scrollY();
+		
+		oBox.style.left = iLeft + 'px';
+		oBox.style.top = iTop + 'px';
+		
+	};
+	
+}
+
+
+function scrollY(){
+	return document.body.scrollTop || document.documentElement.scrollTop;
+}
+
+
+function offsetH(){
+	return document.body.offsetHeight;	
+}
+
+function scrollH(){
+	return document.body.scrollHeight;	
+}
+
+function view(){
+	return {
+		w : document.documentElement.clientWidth,
+		h :	document.documentElement.clientHeight
+	}	
+}
+
+
+
+function isIe6(){
+
+	var str = window.navigator.userAgent.toLowerCase();
+	
+	if( str.indexOf('msie 6') !=-1 )return true;
+	
+	return false;
+	
+}
+
+
+//alert( Math.max(12132,32,43) );
+
+/*
+
+clientHeight / offsetHeight / scrollHeight  最大值
+
+
+*/
+
+
+
+</script>
+
+

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+ul { margin:100px; }
+li { background:url(img/1.gif); width:24px; height:24px; float:left; list-style:none; }
+.bg1 { background:url(img/2.gif); }
+.bg2 { background:url(img/3.gif); }
+</style>
+</head>
+
+<body>
+
+<ul>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+<script>
+var aLi = document.getElementsByTagName('li');
+var num = -1;	// 设置成-1，for就不会执行
+
+for ( var i=0; i<aLi.length; i++ ) {
+	
+	aLi[i].index = i;
+	
+	aLi[i].onmouseover = function () {
+		fnClear ();
+		
+		for ( var i=0; i<=this.index; i++ ) {
+			if ( this.index < 2 ) {
+				aLi[i].className = 'bg1';
+			} else {
+				aLi[i].className = 'bg2';
+			}
+		}
+	};
+	aLi[i].onmouseout = function () {
+		fnClear ();
+		
+		for ( var i=0; i<=num; i++ ) {
+			if ( num < 2 ) {
+				aLi[i].className = 'bg1';
+			} else {
+				aLi[i].className = 'bg2';
+			}
+		}
+	};
+	aLi[i].onclick = function () {
+		// alert(this.index+1 + '分');
+		num = this.index;
+	};
+}
+
+function fnClear () {
+	for ( var i=0; i<aLi.length; i++ ) {
+		aLi[i].className = '';
+	}
+}
+</script>
+
+</body>
+</html>

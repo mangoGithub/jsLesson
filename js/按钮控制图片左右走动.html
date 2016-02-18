@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+ ul {margin: 0; border: 1px solid #333; float: left; padding: 0;}
+ li {list-style: none; float: left; padding: 2px; width: 95px; height: 95px;}
+</style>
+
+<script>
+window.onload=function(){
+	
+	// [1,2,3,4]  [2,3,4,1] [3,4,1,2]
+	
+	var aImg = document.getElementsByTagName('img');
+	var aBtn = document.getElementsByTagName('input');
+	
+	var arr = []; // 1,2,3,4   2,3,4,1
+	
+	for(var i=0; i<aImg.length; i++){
+		arr.push( aImg[i].src );
+	}
+	
+	aBtn[0].onclick = function(){
+	
+		arr.push( arr.shift() );	
+		
+		for(var i=0; i<aImg.length; i++){
+			aImg[i].src = arr[i];	
+		}
+		
+	};
+	
+	aBtn[1].onclick = function(){
+	
+		arr.unshift( arr.pop() );	
+		
+		for(var i=0; i<aImg.length; i++){
+			aImg[i].src = arr[i];	
+		}
+		
+	};
+	
+	
+};
+
+</script>
+</head>
+
+<body>
+  <ul>
+    <li><img src="imgs/img1.jpg" /></li>
+    <li><img src="imgs/img2.jpg" /></li>
+    <li><img src="imgs/img3.jpg" /></li>
+    <li><img src="imgs/img4.jpg" /></li>
+  </ul>
+  <br clear="all" />
+  <input type="button" value="<<" />
+  <input type="button" value=">>" />
+</body>
+</html>

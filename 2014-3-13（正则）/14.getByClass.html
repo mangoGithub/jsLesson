@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+^ : 中括号外面的^ 代表 字符串的起始
+$ : 字符串的结尾
+*/
+
+//alert('sdfsdfdsf'.replace(/$/,'*'));
+
+//	/(^|\s)box(\s|$)/
+
+/*var re = new RegExp('(^|\\s)box(\\s|$)');
+alert(re);*/
+
+
+window.onload = function() {
+	
+	var aEls = getByClass(document, '*', 'box1');
+	
+	console.log(aEls);
+	
+	function getByClass(parent, tagname, classname) {
+		var aEls = parent.getElementsByTagName(tagname);
+		var arr = [];
+		var re = new RegExp('(^|\\s)'+ classname +'(\\s|$)');
+		
+		for (var i=0; i<aEls.length; i++) {
+			if ( re.test(aEls[i].className) ) {
+				arr.push(aEls[i]);
+			}
+		}
+		
+		return arr;
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<div class="box">div1</div>
+    <div class="box box1">div2</div>
+    <div class="box1">div3</div>
+    <div class="box2">div4</div>
+</body>
+</html>

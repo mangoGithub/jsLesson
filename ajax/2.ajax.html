@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<!--
+表单：用来提交用户数据，一般会把数据提交到一个指定的动态网页文件上
+	action : 数据提交的页面地址，如果为空则提交地址为当前这个页面
+    method : 设置表单数据的提交方式
+    	get : 表单默认的提交方式
+        	如果提交方式是get方式，那么提交的数据会通过键值对形式串联起来
+            	key1=value1&key2=value2（多个键值对会用&符号连接起来），最后放到url？后面，通过这样的形式去访问这个地址
+        post : 如果提交方式是post，那么提交的数据同样是通过键值对的形式串联起来，多个数据的串联和get方式的是一样的，不同的提交数据不是在url后面了，是通过发送的请求头信息带过去的，一般用户看不到
+        
+        除了上面的区别以外：
+        	1.get方式提交数据大小有限制，浏览器对url地址的长度是有限制的，如果超过了，多余的数据会被浏览器截断，而post提交的数据大小理论上无限制
+            2.安全问题：
+            	用户角度
+                	get不安全，用户访问的数据会被浏览器所记录（历史记录），造成用户隐私泄漏
+                    post相对安全，用户访问的数据不会被浏览器所缓存
+                程序员角度
+                	get相对安全
+                    post相对不安全
+            3.enctype
+            	发送数据类型，当我们通过post发送数据的时候，需要告诉后端我发送给你的数据是什么格式的
+            默认 application/x-www-form-urlencoded ： url编码	
+                multipart/form-data : 二进制数据
+                text/plain : 文本
+-->
+	<h2>GET方式</h2>
+	<form action="1.get.php" method="get" enctype="application/x-www-form-urlencoded">
+    	用户名：<input type="text" name="username" />
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+    <h2>POST</h2>
+    <form action="2.post.php" method="post">
+    	用户名：<input type="text" name="username" />
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

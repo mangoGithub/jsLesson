@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+转义字符
+\d : 数字
+\D : 非数字
+\w : 字符，字母、数字、_
+\W : 非字符
+\s : 空格
+\S : 非空格
+\b : 边界符，如果一个字符左边或者右边不是一个字符，那么这里就会有一个边界符
+\B : 非边界符
+\1 : 重复子项
+*/
+
+//alert( 'kj fksjdf    dsf'.replace(/\s/g, '*') );
+
+//alert( 'kj fksjdf    dsf'.replace(/\b/g, '*') );
+
+alert( 'sdssdfkkla'.replace(/(\w)\1/g, '*') );
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

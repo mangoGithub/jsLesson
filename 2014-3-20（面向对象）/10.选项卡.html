@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+p {display: none;}
+</style>
+<script>
+window.onload = function() {
+	
+	var oDiv1 = document.getElementById('div1');
+	var oDiv2 = document.getElementById('div2');
+	
+	var oBtn = document.getElementById('btn');
+	
+	tab(oDiv1);
+	tab(oDiv2);
+	
+	oBtn.onclick = function() {
+		
+	}
+	
+	function tab(oDiv) {
+		var aInput = oDiv.getElementsByTagName('input');
+		var aP = oDiv.getElementsByTagName('p');
+		
+		var iLen = aInput.length;
+		var iCur = 0;
+		var iTimer = null;
+		
+		for (var i=0; i<iLen; i++) {
+			aInput[i].index = i;
+			aInput[i].onclick = function() {
+				iCur = this.index;
+				play();
+			}
+		}
+		
+		autoPlay();
+		
+		oDiv.onmouseover = function() {
+			clearInterval(iTimer);
+		}
+		
+		oDiv.onmouseout = function() {
+			autoPlay();
+		}
+		
+		function play() {
+			for (var i=0; i<iLen; i++) {
+				aInput[i].style.background = '';
+				aP[i].style.display = 'none';
+			}
+			aInput[iCur].style.background = 'yellow';
+			aP[iCur].style.display = 'block';
+		}
+		
+		function autoPlay() {
+			iTimer = setInterval(function() {
+				iCur++;
+				if (iCur == iLen) {
+					iCur = 0;
+				}
+				play();
+			}, 1000);
+		}
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<div id="div1">
+    	<input type="button" value="选项一" style="background: yellow" />
+        <input type="button" value="选项二" />
+        <input type="button" value="选项三" />
+        <p style="display: block;">11111111111111</p>
+        <p>22222222222222222222</p>
+        <p>3333333333333333333</p>
+    </div>
+    <div id="div2">
+    	<input type="button" value="选项一" style="background: yellow" />
+        <input type="button" value="选项二" />
+        <input type="button" value="选项三" />
+        <p style="display: block;">11111111111111</p>
+        <p>22222222222222222222</p>
+        <p>3333333333333333333</p>
+    </div>
+    
+    <input type="button" value="按钮" id="btn" />
+</body>
+</html>

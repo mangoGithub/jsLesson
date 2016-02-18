@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<link href="red.css" rel="stylesheet" id="link1" />
+<script>
+window.onload = function() {
+	
+	var aInput = document.getElementsByTagName('input');
+	var oLink = document.getElementById('link1');
+	
+	if ( getCookie('_cssFile') ) {
+		oLink.href = getCookie('_cssFile');
+	}
+	
+	//var arr = ['red.css','yellow.css','blue.css','green.css'];
+	
+	for (var i=0; i<aInput.length; i++) {
+		aInput[i].onclick = function() {
+			
+			oLink.href = this.getAttribute('_cssFile');
+			
+			setCookie('_cssFile', this.getAttribute('_cssFile'), 5);
+			
+		}
+	}
+	
+}
+
+function setCookie(key, value, t) {
+	var oDate = new Date();
+	oDate.setDate( oDate.getDate() + t );
+	document.cookie = key + '=' + value + ';expires=' + oDate.toGMTString();
+}
+function getCookie(key) {
+	var arr1 = document.cookie.split('; ');
+	for (var i=0; i<arr1.length; i++) {
+		var arr2 = arr1[i].split('=');
+		if (arr2[0] == key) {
+			return arr2[1];
+		}
+	}
+}
+function delCookie(key) {
+	setCookie(key, '', -1);
+}
+</script>
+</head>
+
+<body>
+	<input type="button" value="按钮一" style="background: red;" _cssFile="red.css" />
+    <input type="button" value="按钮二" style="background: yellow;" _cssFile="yellow.css" />
+    <input type="button" value="按钮三" style="background: blue;" _cssFile="blue.css" />
+    <div id="div1"></div>
+</body>
+</html>

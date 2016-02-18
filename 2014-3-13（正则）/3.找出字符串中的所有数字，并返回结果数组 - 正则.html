@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+var str = 'jk32kjh342hj 3424hj324hj234kl6';
+/*var arr = str.match(/\d+/g);
+alert(arr);*/
+
+/*
+/规则/
+new RegExp('规则');
+*/
+
+var re = new RegExp('\\d+', 'g');
+//alert(re);
+var arr = str.match(re);
+alert(arr);
+/*
+转义字符 : 有特殊意义的字符
+windows : \r\n
+Linux	: \n
+Mac		: \r
+*/
+
+/*alert('通知：\\\\n今天休息\'');*/
+
+//alert( 'I say:"i\'m ..."' );
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

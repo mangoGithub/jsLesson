@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script src="jquery-1.8.2.min.js"></script>
+<script>
+$(function() {
+	
+	$('div').not('.box').css("background-color", "red");
+	
+});
+</script>
+</head>
+
+<body>
+	<div id="div1" style="display:-none;">div1<p id="p1">pppppp</p></div>
+    <div id="div2">div2</div>
+    <div id="div3" class="box">div3</div>
+    <p>pppppp</p>
+    <ul id="ul1">
+    	<li>111111111</li>
+        <li>22222222222</li>
+        <li>333333333333</li>
+        <li class="box">44444444444</li>
+        <li>55555555555</li>
+    </ul>
+     <ul id="ul2">
+    	<li>111111111</li>
+        <li>22222222222</li>
+        <li>333333333333</li>
+        <li class="box">44444444444</li>
+        <li>55555555555</li>
+    </ul>
+</body>
+</html>

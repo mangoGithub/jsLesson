@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 { width: 100px; height: 100px; background: red; position: absolute; left: 0; top: 0; }
+</style>
+<script>
+window.onload = function() {
+	
+	var oDiv = document.getElementById('div1');
+	
+	if (getCookie('left')) {
+		oDiv.style.left = getCookie('left') + 'px';
+		oDiv.style.top = getCookie('top') + 'px';
+	}
+	
+	oDiv.onmousedown = function(ev) {
+		var ev = ev || event;
+		
+		var disX = ev.clientX - this.offsetLeft;
+		var disY = ev.clientY - this.offsetTop;
+		
+		document.onmousemove = function(ev) {
+			var ev = ev || event;
+			
+			oDiv.style.left = ev.clientX - disX + 'px';
+			oDiv.style.top = ev.clientY - disY + 'px';
+			
+		}
+		
+		document.onmouseup = function() {
+			document.onmousemove = null;
+			
+			setCookie('left', oDiv.offsetLeft, 5);
+			setCookie('top', oDiv.offsetTop, 5);
+			
+		}
+		
+		return false;
+	}
+	
+}
+
+function setCookie(key, value, t) {
+	var oDate = new Date();
+	oDate.setDate( oDate.getDate() + t );
+	document.cookie = key + '=' + value + ';expires=' + oDate.toGMTString();
+}
+function getCookie(key) {
+	var arr1 = document.cookie.split('; ');
+	for (var i=0; i<arr1.length; i++) {
+		var arr2 = arr1[i].split('=');
+		if (arr2[0] == key) {
+			return arr2[1];
+		}
+	}
+}
+function delCookie(key) {
+	setCookie(key, '', -1);
+}
+</script>
+</head>
+
+<body>
+	<div id="div1"></div>
+</body>
+</html>

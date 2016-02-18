@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1{ width:20px; height:20px; background:red; position:absolute; left:900px; top:100px;}
+
+#div2{ width:20px; height:20px; background:blue; position:absolute; left:500px; top:400px;}
+</style>
+<script>
+
+window.onload = function(){
+	var oDiv1 = document.getElementById('div1');
+	var oDiv2 = document.getElementById('div2');
+	
+	var iSpeed = 10;
+	
+	setInterval(function(){
+		
+		var a = oDiv2.offsetTop - oDiv1.offsetTop;
+		var b = oDiv2.offsetLeft - oDiv1.offsetLeft;
+		
+		var c = Math.sqrt(a*a + b*b);
+		
+		var sX = iSpeed * b/c;
+		var sY = iSpeed * a/c;
+		
+		oDiv1.style.left = sX + oDiv1.offsetLeft + 'px';
+		oDiv1.style.top = sY + oDiv1.offsetTop + 'px';		
+		
+		
+	},30);
+	
+};
+
+</script>
+</head>
+
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+</body>
+</html>

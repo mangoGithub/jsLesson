@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+ul {margin: 0; padding: 0; border: 1px solid #000; position: absolute; left: 0; display: none;}
+li { list-style:none; padding: 10px; cursor: pointer; white-space:nowrap;}
+#ul1 {}
+</style>
+<script>
+window.onload = function() {
+	
+	var oUl = document.getElementById('ul1');
+	
+	//var a = oUl.getElementsByTagName('a');
+	
+	document.oncontextmenu = function(ev) {
+		
+		var ev = ev || event;
+		
+		oUl.style.display = 'block';
+		oUl.style.left = ev.clientX + 'px';
+		oUl.style.top = ev.clientY + 'px';
+		
+		showChildren(oUl);
+		
+		return false;
+	}
+	
+	document.onclick = function() {
+		
+		oUl.style.display = 'none';
+		
+	}
+
+	function showChildren(obj) {
+		var aLi = obj.children;
+		
+		for (var i=0; i<aLi.length; i++) {
+			
+			aLi[i].onmouseover = function() {
+				clearTimeout(this.iTimer);
+				var cUl = this.getElementsByTagName('ul')[0];
+				if (cUl) {
+					cUl.style.display = 'block';
+					document.title = this.parentNode.offsetWidth;
+					//this.parentNode.style.display = 'block';
+					console.log(this.parentNode.offsetWidth);
+					cUl.style.left = this.parentNode.offsetWidth + 'px';
+					cUl.style.top = this.offsetTop + 'px';
+					showChildren(cUl);
+				}
+			}
+			
+			aLi[i].onmouseout = function() {
+				var cUl = this.getElementsByTagName('ul')[0];
+				if (cUl) {
+					this.iTimer = setTimeout(function() {
+						cUl.style.display = 'none';
+					}, 30);
+				}
+			}
+			
+		}
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<ul id="ul1">
+    	<li>菜单一
+        	<span>>></span>
+            <ul>
+            	<li>菜单一 - 1
+                	<span>>></span>
+                    <ul>
+                        <li>菜单二 - 1 - 1</li>
+                        <li>菜单二 - 2 - 2</li>
+                        <li>菜单二 - 3 - 3
+                        	<span>>></span>
+                            <ul>
+                                <li>菜单二 - 1</li>
+                                <li>菜单二 - 2</li>
+                                <li>菜单二 - 3
+                                	<span>>></span>
+                                    <ul>
+                                        <li>菜单二 - 1</li>
+                                        <li>菜单二 - 2</li>
+                                        <li>菜单二 - 3
+                                            <span>>></span>
+                                            <ul>
+                                                <li>菜单二 - 1</li>
+                                                <li>菜单二 - 2</li>
+                                                <li>菜单二 - 3</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>菜单一 - 2</li>
+                <li>菜单一 - 3</li>
+            </ul>
+        </li>
+        <li>菜单二
+        	<span>>></span>
+            <ul>
+            	<li>菜单二 - 1</li>
+                <li>菜单二 - 2</li>
+                <li>菜单二 - 3</li>
+            </ul>
+        </li>
+        <li>菜单三</li>
+        <li>菜单四
+        	<span>>></span>
+            <ul>
+            	<li>菜单四 - 1</li>
+                <li>菜单四 - 2</li>
+                <li>菜单四 - 3</li>
+            </ul>
+        </li>
+        <li>菜单五</li>
+        <li>菜单六</li>
+        <li>菜单七</li>
+    </ul>
+</body>
+</html>

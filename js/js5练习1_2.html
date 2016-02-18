@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#tab { border: 5px solid #333; margin: 50px auto 0; }
+#tab th,#tab td { width: 200px; text-align: center; border: 1px solid #555; }
+#tab thead { background: #9cf; }
+</style>
+</head>
+
+<body>
+
+<table id="tab">
+
+  <thead>
+  	<tr>
+    	<th>全选<input type="checkbox" /></th><th>商品编号</th><th>商品名称</th><th>单价（元）</th><th>数目（瓶/听）</th><th>操作</th>
+    </tr>
+  </thead>
+  
+  <tbody></tbody>
+
+</table>
+
+</body>
+</html>
+
+<script>
+
+
+/*
+
+   商品      单价      数量
+	 
+	 雪碧      2.8      100
+	 七喜      2.7      70
+	 醒目      1.8      45
+	 农夫山泉   1.3      120
+	 美年达     2.7      50
+	 王老吉     3.7      45
+	 加多宝     3.7      60
+
+*/
+
+var aData = [
+	
+	{
+		name : '雪碧',
+		price : 2.3,
+		number : 50
+	},
+	
+	{
+		name : '可口可乐',
+		price : 2.1,
+		number : 40
+	},
+	
+	{
+		name : '百事可乐',
+		price : 2.2,
+		number : 60
+	},
+	
+	{
+		name : '七喜',
+		price : 2.0,
+		number : 40
+	},
+	
+	{
+		name : '醒目',
+		price : 2.0,
+		number : 20
+	},
+	
+	{
+		name : '加多宝',
+		price : 2.4,
+		number : 60
+	},
+	
+	{
+		name : '美年达',
+		price : 2.1,
+		number : 45
+	},
+	
+	{
+		name : '芬达',
+		price : 2.2,
+		number : 40
+	},
+	
+	{
+		name : '健力宝',
+		price : 2.1,
+		number : 20
+	}
+
+];
+
+var arr = ['#eee','#ccc'];
+
+var oTab = document.getElementById('tab');
+var oBody = oTab.tBodies[0];
+var aRows = oBody.rows;
+var aA = oBody.getElementsByTagName('a');
+
+var oClk = oTab.getElementsByTagName('input')[0];
+var aChked = oBody.getElementsByTagName('input');
+//alert( aRows.length );
+
+for(var i=0; i<aData.length; i++){
+
+	var oTr = document.createElement('tr');
+	
+	var oTd1 = document.createElement('td');
+	var oTd2 = document.createElement('td');
+	
+	oTd1.innerHTML = '<input type="checkbox" />';
+	oTd2.innerHTML = i + 1;
+	oTr.appendChild(oTd1);
+	oTr.appendChild(oTd2);
+	
+	for(var j in aData[i] ){
+	
+		var oTd = document.createElement('td');
+		oTd.innerHTML = aData[i][j];
+		oTr.appendChild(oTd);
+		
+	}
+	
+	var oTd = document.createElement('td');
+	oTd.innerHTML = "<a href='javascript:;'>删除</a>";
+	oTr.appendChild(oTd);
+	
+	oBody.appendChild( oTr );
+	
+}
+
+//alert( aRows.length );
+
+reColor();
+function reColor(){
+	
+	for(var i=0; i<aRows.length; i++){
+		aChked[i].index = i;
+		if(!aChked[i].checked){
+			aRows[i].style.background = arr[i%arr.length];
+		}
+		
+	}
+}
+
+for(var i=0; i<aA.length; i++){
+
+	aA[i].onclick = function(){
+		
+		oBody.removeChild( this.parentNode.parentNode );
+		reColor();	
+		
+		oClk.checked = isChked();
+	};	
+	
+}
+
+oClk.onclick = function(){
+
+	for(var i=0; i<aChked.length; i++){
+	
+		aChked[i].checked = this.checked;	
+		aRows[i].style.background = this.checked ? 'orange' : reColor();
+		
+	}	
+	
+};
+
+for(var i=0; i<aChked.length; i++){
+
+	aChked[i].index = i;
+	aChked[i].onclick = function(){
+	
+		aRows[this.index].style.background = this.checked ? 'orange' : arr[this.index%arr.length];
+		
+		oClk.checked = isChked();
+		
+	};
+	
+}	
+
+
+function isChked(){ //检测是否全选
+
+	for(var i=0; i<aChked.length; i++){
+		if(!aChked[i].checked)return false;	
+	}
+	
+	return true;
+}
+
+
+/*
+
+练习：
+
+	1，加上手动全选或不选效果。
+	
+	2，删除的时候，不能把勾选状态的行背景还原。
+
+	3，如果把所有没勾选的行都删除，全选的勾自动勾选。
+	
+	4，点击商品编号、商品单价、商品数目都可以进行升序和降序排序。
+
+*/
+
+
+</script>

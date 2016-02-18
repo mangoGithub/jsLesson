@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+cookie : 存储数据，
+	cookie是以域名的形式进行存储的，不同的域名存放cookie不能互相通用
+	一个域名下可以存放多个cookie，但是个数是有限制的，不同的浏览器不同的版本限制的个数不一样。
+	document.cookie = '名字=值';
+	每个cookie存放的内容大小也是有限制的，不同的浏览器不同的版本限制大小不一样
+	
+	在测试cookie的时候，如果是本地文件访问形式，很多浏览器是不能正常使用的，因为安全限制本地不允许操作cookie，推荐本地测试用ff，这个问题如果是线上（服务器）环境，则不会有问题。
+	
+	cookie默认是临时存储，当浏览器进程结束的时候自动销毁，如果我们想长时间的存放一个cookie，则可以在设置cookie的时候同时给他设置一个cookie的过期时间
+	document.cookie = '名字=值;expires=字符串格式的时间';
+	
+*/
+
+//var a = +new Date();
+
+//var oDate = new Date();
+
+//alert(typeof oDate);
+//alert(typeof oDate.toGMTString());
+
+//oDate.setDate( oDate.getDate() + 5 );
+//alert(oDate)
+/*document.cookie = 'username=leo;expires=' + oDate.toGMTString();
+document.cookie = 'age=32';*/
+
+//setCookie('username', 'momo', 10);
+//setCookie('age', '32', 10);
+
+//getCookie('username');
+
+//delCookie('username');
+delCookie('username');
+
+//浏览器会把访问的域名下的所有cookie取出来，然后通过一个；+空格来连接所有的cookie，我们通过某些方法得到发送过来的cookie以后，就通过；+空格来拆分
+
+//alert(document.cookie);
+//alert( getCookie('age') );
+
+function setCookie(key, value, t) {
+	var oDate = new Date();
+	oDate.setDate( oDate.getDate() + t );
+	document.cookie = key + '=' + value + ';expires=' + oDate.toGMTString();
+}
+
+function getCookie(key) {
+	//username=momo; age=32
+	var arr1 = document.cookie.split('; ');
+	//['username=momo','age=32']
+	for (var i=0; i<arr1.length; i++) {
+		var arr2 = arr1[i].split('=');
+		if (key == arr2[0]) {
+			return arr2[1];
+		}
+	}
+}
+
+function delCookie(key) {
+	setCookie(key, '', -1);
+}
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

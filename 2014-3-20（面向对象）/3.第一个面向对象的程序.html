@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+function person(name) {
+	var obj = new Object();
+	obj.name = name;
+	obj.say = function() {
+		alert('我是' + this.name);
+	}
+	return obj;
+}
+
+var p1 = person('leo');
+p1.say();
+
+var p2 = person('momo');
+p2.say();
+</script>
+</head>
+
+<body>
+</body>
+</html>

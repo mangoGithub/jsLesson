@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#wrap{-webkit-perspective:800px; height:200px; margin:50px auto;position:relative; top:0;left:0;}
+#list1{ position:relative; top:0;left:0;height:200px; -webkit-transform-origin:center center -100px; transition:1s;}
+div{width:200px; position:absolute;left:0;top:200px; -webkit-transform-style:preserve-3d; -webkit-transform-origin:top;}
+div span{ display:block;height:200px;background:#ccc;}
+</style>
+</head>
+<body>
+<div id="wrap">
+    <div id="list1">
+        <span style="background:green;">1</span>
+        <div style="-webkit-transform:rotateX(-90deg)">
+            <span style="background:yellow;">2</span>
+            <div style="-webkit-transform:rotateX(-90deg)">
+                <span style="background:blue;">3</span>
+                <div style="-webkit-transform:rotateX(-90deg)">
+                    <span style="background:Red;">4</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="button" value="1" />
+<input type="button" value="2" />
+<input type="button" value="3" />
+<input type="button" value="4" />
+<script>
+var olist1=document.getElementById("list1");
+var aBtns=document.getElementsByTagName("input");
+for(var i=0;i<aBtns.length;i++)
+{
+	(function(a){
+		aBtns[a].onclick=function()
+		{
+			olist1.style.WebkitTransform="rotateX("+a*90+"deg)";
+		};
+	})(i)
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+@-webkit-keyframes move
+{
+	0%
+	{
+		-webkit-transform:translateY(0px)
+	}	
+	100%
+	{
+		-webkit-transform:translateY(-7px)
+	}
+}
+@-webkit-keyframes shadow
+{
+	0%
+	{
+		-webkit-transform:scale(1);
+		opacity:1;
+	}	
+	100%
+	{
+		-webkit-transform:scale(0.8);
+		opacity:0.6;
+	}
+}
+@-webkit-keyframes rotate
+{
+	0%
+	{
+		-webkit-transform:rotate(0deg);
+	}	
+	100%
+	{
+		-webkit-transform:rotate(-360deg);
+	}
+}
+@-webkit-keyframes rotate2
+{
+	0%
+	{
+		-webkit-transform:rotate(0deg);
+	}	
+	100%
+	{
+		-webkit-transform:rotate(360deg);
+	}
+}
+
+#loading{width:120px;height:140px; position:fixed; left:calc(50% - 60px);top:calc(50% - 70px);}
+#load{width:120px;height:100px;background:url(loding/loading3.png) no-repeat; -webkit-animation:.6s move infinite alternate linear;}
+#load div{width:120px;height:100px; position:absolute;left:0;top:0;}
+#loadIco1{width:120px;height:100px;background:url(loding/loading4.png) no-repeat; position:absolute;left:0;top:0;-webkit-animation:1s rotate infinite linear;}
+#loadIco2{background:url(loding/loading5.png) no-repeat;-webkit-animation:1s rotate2 infinite linear;}
+#loadText{ text-align:center; font:bold 16px/100px "宋体"; color:#F03;}
+#boxShadow{width:100px;height:30px; position:absolute; bottom:15px;left:10px; background:-webkit-radial-gradient(contain,rgba(0,0,0,0.5),rgba(0,0,0,0));-webkit-animation:.6s shadow infinite alternate linear;} 
+</style>
+</head>
+<body>
+<div id="loading">
+	<div id="load">
+    	<div id="loadIco1"></div>
+        <div id="loadIco2"></div>
+        <div id="loadText">0%</div>
+    </div>
+    <div id="boxShadow"></div>
+</div>
+<script>
+var oText=document.getElementById("loadText");
+var aDiv=document.getElementById("loading").getElementsByTagName("div");
+var iLength=0;
+var aImg=["http://pic22.nipic.com/20120709/1508017_160812488105_2.jpg","http://pic31.nipic.com/20130719/8952533_125800120000_2.jpg","http://pic24.nipic.com/20121012/2256974_112957547000_2.jpg","http://pic2.nipic.com/20090430/1506245_100208006_2.jpg","http://pic21.nipic.com/2/6794387_112717457181_2.jpg"];
+for(var i=0;i<aImg.length;i++)
+{
+	var oImg=new Image();
+	oImg.src=aImg[i];
+	oImg.onload=function()
+	{
+		iLength++;
+		oText.innerHTML=parseInt(iLength/aImg.length*100)+"%";
+		if(iLength==aImg.length)
+		{
+			for(var i=0;i<aDiv.length;i++)
+			{
+				//aDiv[i].style.WebkitAnimationPlayState="paused";
+			}
+		}
+	};
+	/*oImg.onerror=function()
+	{
+		alert("加载失败");
+	}*/
+}
+</script>
+</body>
+</html>

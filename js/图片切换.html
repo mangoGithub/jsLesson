@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+window.onload = function() {
+	
+	var oImg = document.getElementById('img1');
+	var iCur = 1;
+	
+	oImg.onmousemove = function(ev) {
+		
+		var ev = ev || event;
+		
+		if ( ev.clientX < this.offsetLeft + this.offsetWidth / 2 ) {
+			this.f = true;
+			this.style.cursor = 'url(pic_prev.cur),auto';
+		} else {
+			this.f = false;
+			this.style.cursor = 'url(pic_next.cur),auto';
+		}
+		
+	}
+	
+	oImg.onclick = function() {
+		
+		if ( this.f ) {
+			iCur--;
+			if (iCur < 1) {
+				alert('到头了');
+				iCur = 1;
+			}
+		} else {
+			iCur++;
+			if (iCur > 6) {
+				alert('到尾了');
+				iCur = 6;
+			}
+		}
+		
+		this.src = iCur + '.jpg';
+		
+	}
+	
+}
+</script>
+</head>
+
+<body style="margin: 0; text-align: center;">
+	<img src="1.jpg" style="margin: 200px auto 0;" id="img1" />
+</body>
+</html>

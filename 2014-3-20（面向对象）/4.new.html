@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+new : 一元 运算符
+*/
+
+var c;
+
+function fn() {
+	//obj = new Object();
+	//this = obj;
+	c = this;
+	alert(this);
+	//return obj;
+}
+
+//var a = fn();	//window
+//alert(a);		//undefined
+
+var b = new fn();	//
+alert(b);			//
+alert(b == c);
+
+/*
+当我们使用new执行一个函数的时候，这个函数内部会自动创建一个空的对象，并且把这个函数内部的this指向了这个空对象，同时还会在最后返回这个对象
+*/
+</script>
+</head>
+
+<body>
+</body>
+</html>

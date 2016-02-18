@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+.box { border: 1px solid red; position: absolute; width: 0; height: 0; }
+</style>
+<script>
+window.onload = function() {
+	
+	document.onmousedown = function(ev) {
+		
+		var ev = ev || event;
+		
+		var disX = ev.clientX;
+		var disY = ev.clientY;
+		
+		var oBox = document.createElement('div');
+		oBox.className = 'box';
+		oBox.style.left = disX + 'px';
+		oBox.style.top = disY + 'px';
+		document.body.appendChild(oBox);
+		
+		document.onmousemove = function(ev) {
+			var ev = ev || event;
+			
+			oBox.style.width = Math.abs(ev.clientX - disX) + 'px';
+			oBox.style.height = Math.abs(ev.clientY - disY) + 'px';
+			oBox.style.left = Math.min( ev.clientX, disX ) + 'px';
+			oBox.style.top = Math.min( ev.clientY, disY ) + 'px';
+		}
+		
+		document.onmouseup = function() {
+			document.onmousemove = null;
+		}
+		
+		return false;
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+JQ初级
+运动
+面向对象
+正则
+ajax
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script src="ajax.js"></script>
+<script>
+window.onload = function() {
+	
+	var oUsername = document.getElementById('username');
+	var oMsg = document.getElementById('msg');
+	
+	oUsername.onblur = function() {
+		
+		ajax('post', 'checkUsername3.php', 'username=' + oUsername.value, function(data) {
+			var d = JSON.parse(data);
+			
+			oMsg.style.color = (d.code == 1 || d.code == 2) ? 'red' : 'green';
+			oMsg.innerHTML = d.message;
+		});
+		
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<form action="1.get.php" method="get">
+    	用户名：<input type="text" name="username" id="username" /><span id="msg"></span>
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

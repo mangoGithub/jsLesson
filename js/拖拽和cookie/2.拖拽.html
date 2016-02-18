@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 100px; height: 100px; background: red; position: absolute;}
+</style>
+<script>
+window.onload = function() {
+	
+	/*
+	onmousedown : 选择拖拽的元素
+	onmousemove : 移动过拖拽的元素
+	onmouseup : 释放拖拽的元素
+	
+	当页面中有文字被选中的时候，拖拽效果会出问题
+		原因：当鼠标按下的时候，系统发现如果页面中文字是被选中的状态，那么就会触发浏览器的文字拖拽的默认行为，而这个默认行为的实现机制和我们的拖拽的实现机制是一样的。
+		解决：
+			标准：阻止事件默认行为的发生
+			非标准ie：使用ie下全局捕获特性
+	*/
+	
+	var oDiv = document.getElementById('div1');
+	
+	oDiv.onmousedown = function(ev) {
+		
+		var ev = ev || event;
+		
+		var disX = ev.clientX - this.offsetLeft;
+		var disY = ev.clientY - this.offsetTop;
+		
+		if (oDiv.setCapture) {
+			oDiv.setCapture();
+		}
+		
+		document.onmousemove = function(ev) {
+			var ev = ev || event;
+			
+			oDiv.style.left = ev.clientX - disX + 'px';
+			oDiv.style.top = ev.clientY - disY + 'px';
+		}
+		
+		document.onmouseup = function() {
+		
+			document.onmousemove = null;
+			
+			//releaseCapture : 释放全局捕获
+			if (oDiv.releaseCapture) {
+				oDiv.releaseCapture();
+			}
+		
+		}
+		
+		return false;
+		
+	}
+	
+	/*document.onmousedown = function() {
+		return false;
+	}*/
+	
+	
+}
+</script>
+</head>
+
+<body>
+	sadasdasdasd
+	<div id="div1"></div>
+    <div id="div2" style="width: 100px; height: 100px; background: green; position: absolute; left: 400px; top: 200px; z-index: 9;"></div>
+</body>
+</html>

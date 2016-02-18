@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+/*
+AJAX : Asynchronous JavaScript and XML（异步JavaScript和XML)
+可以通过js去访问（请求）一个url数据，并且得到返回结果
+*/
+
+//1.要使用ajax去访问url，首先要创建一个ajax对象
+//在ie6及其一下XMLHttpRequest不存在
+//ie6- : ActiveXObject('Microsoft.XMLHTTP');
+//var xhr = new XMLHttpRequest();
+
+/*
+我们通过浏览器访问ulr的步骤
+	1.打开浏览器 - 创建对象
+	2.输入url - open
+	3.跳转 - send
+	4.等待数据返回 - 事件
+	5.浏览器解析数据并显示 - 数据的解析
+*/
+
+window.onload = function() {
+	
+	var oUsername = document.getElementById('username');
+	var oMsg = document.getElementById('msg');
+	
+	oUsername.onblur = function() {
+		
+		var xhr = null;
+
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		
+		//alert(xhr);
+		
+		/*
+		open(提交方式，url，是否异步)
+			提交方式：
+				get
+					ajax不负责收集表单内容，所有发送数据的键值需要我们根据实际情况手动填写
+				post
+			是否异步
+				异步 : 无阻塞
+				同步 : 阻塞
+		*/
+		xhr.open('get', 'checkUsername2.php?username=' + encodeURI(oUsername.value) + '&' + new Date().getTime(), true);
+		/*
+		发送请求
+		*/
+		xhr.send();
+		
+		/*
+		xhr.responseText : 属性，当我们通过ajax请求一个url，请求成功以后，返回的数据就存放这个属性里面，他存的是字符串
+		*/
+		//alert(xhr.responseText); // 不能这么写，因为js代码执行速度很快，并且他是无阻塞模式的，也就是你的请求还在处理，代码的执行速度快于请求速度，所以在这个时候处理数据会是空的，因为还没返回
+		
+		//我们需要用到一个事件去处理
+		//readyState : 属性，ajax工作（请求）状态
+		/*
+			0	（初始化）还没有调用open()方法
+			1	（载入）已调用send()方法，正在发送请求
+			2	（载入完成）send()方法完成，已收到全部响应内容
+			3	（解析）正在解析响应内容
+			4	（完成）响应内容解析完成，可以在客户端调用了
+		*/
+		//readystatechange : 事件，当readyState改变的时候触发
+		xhr.onreadystatechange = function() {
+			
+			if (xhr.readyState == 4) {
+				
+				//alert(typeof xhr.responseText);
+				var data = JSON.parse(xhr.responseText);
+				
+				console.log(data);
+				
+				/*if (data.code == 1 || data.code == 2) {
+					oMsg.style.color = 'red';
+				} else {
+					oMsg.style.color = 'green';
+				}*/
+				oMsg.style.color = (data.code == 1 || data.code == 2) ? 'red' : 'green';
+				oMsg.innerHTML = data.message;
+				
+			}
+			
+		}
+		
+	}
+	
+}
+
+</script>
+</head>
+
+<body>
+	<form action="1.get.php" method="get">
+    	用户名：<input type="text" name="username" id="username" /><span id="msg"></span>
+        <br />
+        密　码：<input type="password" name="password" />
+        <br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

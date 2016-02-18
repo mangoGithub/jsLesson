@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+var str = 'kddddiiiiiiyyyyyyyyyrrrrpppppffffhh';
+
+var s = '';
+var l = 0;
+
+str.replace(/(\w)\1+/g, function(v) {
+	//alert(v);
+	
+	if (v.length > l) {
+		l = v.length;
+		s = v.charAt(0);
+	}
+	
+	//l=9,s='y'
+	
+});
+
+alert('出现次数最多的是：'+ s +'，出现了 ' + l + ' 次');
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

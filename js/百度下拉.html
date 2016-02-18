@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#text1 {width: 300px; height: 30px; padding: 5px; border: 1px solid #f90; font-size: 18px;}
+#ul1 {margin: 0; padding: 0; width: 310px; border: 1px solid #f90; display: none;}
+li { list-style: none;}
+li a { display: block; text-decoration: none; color: black; line-height: 30px; padding: 5px;}
+li a:hover, li a.focus { background: #f90; color: white;}
+</style>
+<script>
+/*
+有一个输入框，默认有文字 (请选择内容)
+然后点击输入框，默认文字消失，出现下拉列表（有一个列表，默认隐藏）
+鼠标在列表移动的时候，列表中当前项高亮，移出的时候取消当前行的高亮
+点击列表中某一项的时候，当前项的内容进入到上面输入框中，列表隐藏，当前项高亮，（被选中的项的高亮在下次列表显示的高亮还存在）
+点击当前列表其他地方
+	如果输入框中文字：保留已有内容不做变更
+	如果输入框没有文字；回到默认的文字 (请选择内容)
+*/
+window.onload = function() {
+	
+	var oText = document.getElementById('text1');
+	var oUl = document.getElementById('ul1');
+	var aA = oUl.getElementsByTagName('a');
+	
+	oText.onfocus = function() {
+		
+		if (this.value == '请选择内容') {
+			this.value = '';
+		}
+		oUl.style.display = 'block';
+		
+	}
+	
+	for (var i=0; i<aA.length; i++) {
+		
+		aA[i].onclick = function() {
+			for (var i=0; i<aA.length; i++) {
+				aA[i].className = '';
+			}
+			//console.log(1)
+			oText.value = this.innerHTML;
+			this.className = 'focus';
+			oUl.style.display = 'none';
+			return false;
+		}
+		
+	}
+	
+	oText.onblur = function() {
+		setTimeout(function() {
+			oUl.style.display = 'none';
+		}, 100);
+		//console.log(2)
+		if (this.value == '') {
+			this.value = '请选择内容';
+		}
+	}
+	
+	
+	
+}
+</script>
+</head>
+
+<body>
+	<input type="text" id="text1" value="请选择内容" />
+    <ul id="ul1">
+    	<li><a href="">html+css</a></li>
+        <li><a href="">javascript</a></li>
+        <li><a href="">html5+css3</a></li>
+        <li><a href="">java</a></li>
+        <li><a href="">php</a></li>
+    </ul>
+</body>
+</html>

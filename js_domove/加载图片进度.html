@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+#div1 {width: 500px; height: 30px; border: 1px solid #F60; position: relative;}
+#div2 { width: 0; height: 30px; background: #FC0;}
+#div3 {width: 500px; height: 30px; text-align: center; color: red; font-size: 18px; font-weight: bold; position: absolute; left: 0; top: 0; line-height: 30px;}
+</style>
+<script>
+window.onload = function() {
+	
+	var oDiv1 = document.getElementById('div1');
+	var oDiv2 = document.getElementById('div2');
+	var oDiv3 = document.getElementById('div3');
+	
+	var arr = [
+		'http://h.hiphotos.baidu.com/image/w%3D2048/sign=96ba60248b13632715edc533a5b7a1ec/d8f9d72a6059252d534fe1fc359b033b5ab5b9ea.jpg',
+		'http://a.hiphotos.baidu.com/image/w%3D2048/sign=23155cbe8e5494ee8722081919cde1fe/241f95cad1c8a78619dc970f6509c93d70cf5039.jpg',
+		'http://g.hiphotos.baidu.com/image/w%3D2048/sign=779340dd8813632715edc533a5b7a1ec/d8f9d72a6059252db266c105369b033b5bb5b9ba.jpg',
+		'http://b.hiphotos.baidu.com/image/w%3D2048/sign=9e233f9fdb33c895a67e9f7be52b73f0/377adab44aed2e731ad3ce248501a18b87d6fa84.jpg',
+		'http://e.hiphotos.baidu.com/image/w%3D2048/sign=08427deb2d2eb938ec6d7df2e15a8435/b2de9c82d158ccbf3024cb301bd8bc3eb135411b.jpg',
+		'http://d.hiphotos.baidu.com/image/w%3D2048/sign=10ac2304fadcd100cd9cff2146b34610/0eb30f2442a7d933e3fe6d7aaf4bd11373f00160.jpg',
+		'http://b.hiphotos.baidu.com/image/w%3D2048/sign=08acf2659a22720e7bcee5fa4ff30b46/5243fbf2b2119313b125a8b767380cd791238d56.jpg',
+		'http://e.hiphotos.baidu.com/image/w%3D2048/sign=a23b20fab11c8701d6b6b5e613479f2f/b3fb43166d224f4aaceced0d0bf790529822d1b3.jpg',
+		'http://a.hiphotos.baidu.com/image/w%3D2048/sign=043d480159b5c9ea62f304e3e101b700/8c1001e93901213f88a830d656e736d12f2e9524.jpg',
+		'http://f.hiphotos.baidu.com/image/w%3D2048/sign=5aef6b9e442309f7e76faa1246360df3/342ac65c10385343ee57f92b9113b07eca80881b.jpg',
+		'http://a.hiphotos.baidu.com/image/w%3D2048/sign=221f38364890f60304b09b470d2ab21b/10dfa9ec8a136327ca4d7634938fa0ec08fac711.jpg',
+		'http://h.hiphotos.baidu.com/image/w%3D2048/sign=30ef4a7daf345982c58ae29238cc30ad/f2deb48f8c5494ee572dd1102ff5e0fe99257ea8.jpg',
+		'http://d.hiphotos.baidu.com/image/w%3D2048/sign=7860483a4f4a20a4311e3bc7a46a9922/3b87e950352ac65c2b4e765bfbf2b21193138a4a.jpg',
+		'http://a.hiphotos.baidu.com/image/w%3D2048/sign=4aaddd39718da9774e2f812b8469f919/8b13632762d0f70391b28bd60afa513d2697c5b3.jpg',
+		'http://b.hiphotos.baidu.com/image/w%3D2048/sign=f40ff2ea932397ddd6799f046dbab3b7/9c16fdfaaf51f3de25b8726996eef01f3a2979b1.jpg'
+	];
+	
+	var iCur = 0;
+	var oImage = new Image();
+	var iWidth = oDiv1.clientWidth;
+	var iLen = arr.length;
+	
+	xunlei();
+	
+	function xunlei() {
+		
+		oImage.src = arr[iCur];
+		oImage.onload = function() {
+			
+			var iScale = ++iCur / iLen;
+			oDiv2.style.width = iWidth * iScale + 'px';
+			oDiv3.innerHTML = Math.ceil( iScale * 100 ) + '%';
+			
+			if (iCur < iLen) {
+				xunlei();	//递归
+			}
+			
+		}
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+	<div id="div1">
+    	<div id="div2"></div>
+        <div id="div3">0%</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<ul>
+	<li>
+		<img src="img/a1.jpg" width="40" height="40" />
+		<input type="button" value="-" />
+		<strong>0</strong>
+		<input type="button" value="+" />
+		单价：<em>12.5元</em>
+		小计：<span>0元</span>
+	</li>
+	<li>
+		<img src="img/a2.jpg" width="40" height="40" />
+		<input type="button" value="-" />
+		<strong>0</strong>
+		<input type="button" value="+" />
+		单价：<em>19.5元</em>
+		小计：<span>0元</span>
+	</li>
+	<li>
+		<img src="img/a3.jpg" width="40" height="40" />
+		<input type="button" value="-" />
+		<strong>0</strong>
+		<input type="button" value="+" />
+		单价：<em>29.5元</em>
+		小计：<span>0元</span>
+	</li>
+	<li>
+		<img src="img/a4.jpg" width="40" height="40" />
+		<input type="button" value="-" />
+		<strong>0</strong>
+		<input type="button" value="+" />
+		单价：<em>39.5元</em>
+		小计：<span>0元</span>
+	</li>
+	<li>
+		<img src="img/a5.jpg" width="40" height="40" />
+		<input type="button" value="-" />
+		<strong>0</strong>
+		<input type="button" value="+" />
+		单价：<em>99.5元</em>
+		小计：<span>0元</span>
+	</li>
+</ul>
+<p>亲，您一共购买了0件商品，合计：0元<br />其中，单价最贵的商品是：0元；该商品图片是：
+
+</p>
+
+<script>
+var aLi = document.getElementsByTagName('li');
+var arr = [];
+
+for ( var i=0; i<aLi.length; i++ ) {
+	fnCount (aLi[i]);
+	arr.push(0);
+}
+
+function fnSum () {
+	var aStrong = document.getElementsByTagName('strong');
+	var aSpan = document.getElementsByTagName('span');
+	var aEm = document.getElementsByTagName('em');
+	var aImg = document.getElementsByTagName('img');
+	var oP = document.getElementsByTagName('p')[0];
+	var num = 0;
+	var price = 0;
+	var url = '';
+	
+	for ( var i=0; i<aStrong.length; i++ ) {
+		num += Number( aStrong[i].innerHTML );
+		price += parseFloat( aSpan[i].innerHTML );
+		
+		if ( aStrong[i].innerHTML > 0 ) {
+			arr[i] = parseFloat( aEm[i].innerHTML );
+		} else {
+			arr[i] = 0;
+		}
+	}
+	
+	var iMax = 0;
+	for ( var i=0; i<arr.length; i++ ) {
+		if ( iMax < arr[i] ) {
+			iMax = arr[i];
+			url = aImg[i].src;
+		}
+	}
+	
+	oP.innerHTML = '亲，您一共购买了' + num + '件商品，合计：' + price + '元<br />其中，单价最贵的商品是：'+ iMax +'元；该商品图片是：<img src="'+ url +'" width="80" height="80" />';
+}
+
+function fnCount ( li ) {
+	var aBtn = li.getElementsByTagName('input');
+	var oStrong = li.getElementsByTagName('strong')[0];
+	var oEm = li.getElementsByTagName('em')[0];
+	var oSpan = li.getElementsByTagName('span')[0];
+	var num = Number(oStrong.innerHTML);// '0' => 0
+	var price = parseFloat(oEm.innerHTML);	// '99.5元'	=> 99.5
+	
+	aBtn[0].onclick = function () {
+		if ( num > 0 ) {
+			num--;
+		}
+		oStrong.innerHTML = num;
+		oSpan.innerHTML = num*price + '元';
+		
+		fnSum();
+	};
+	aBtn[1].onclick = function () {
+		num++;
+		oStrong.innerHTML = num;
+		oSpan.innerHTML = num*price + '元';
+		
+		fnSum();
+	};
+}
+</script>
+
+
+</body>
+</html>
